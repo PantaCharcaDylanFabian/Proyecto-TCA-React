@@ -49,3 +49,29 @@ export interface ZoomedProduct {
   title: string;
   detail: string;
 }
+
+export interface ManagedProduct {
+  id?: number | string;
+  codigo: string;
+  nombre: string;
+  categoria: string;
+  precio: number;
+  stock_minimo: number;
+  stock_actual: number;
+  imagen?: string;
+  marca?: string;
+  activo: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ProductValidationError {
+  field: string;
+  message: string;
+}
+
+export interface ImportValidationResult {
+  totalRows: number;
+  acceptedRows: ManagedProduct[];
+  rejectedRows: { row: number; item: Partial<ManagedProduct>; errors: string[] }[];
+}

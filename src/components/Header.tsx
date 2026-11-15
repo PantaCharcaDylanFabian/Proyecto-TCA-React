@@ -101,6 +101,23 @@ export const Header: React.FC = () => {
                   NOSOTROS
                 </a>
               </li>
+              <li>
+                <a
+                  href="gestion-productos.html"
+                  onClick={(e) => handleNavClick(e, 'gestion-productos.html')}
+                  className={`text-white font-bold text-sm tracking-wide hover:text-amber-200 transition-colors uppercase py-1 flex items-center gap-1.5 ${
+                    isCurrent('gestion') ? 'border-b-2 border-white text-amber-200' : ''
+                  }`}
+                  title="Gestión de Catálogo y Productos (HU11)"
+                >
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                  </svg>
+                  GESTIÓN
+                </a>
+              </li>
             </ul>
           </nav>
         </div>

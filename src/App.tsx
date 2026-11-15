@@ -15,6 +15,7 @@ import { NosotrosPage } from './pages/NosotrosPage';
 import { BebidasPage } from './pages/BebidasPage';
 import { AlcoholicasPage } from './pages/AlcoholicasPage';
 import { ProductViewerPage } from './pages/ProductViewerPage';
+import { ProductManagementPage } from './pages/ProductManagementPage';
 import { getSubcategoryData } from './data/catalog';
 
 const AppContent: React.FC = () => {
@@ -87,13 +88,23 @@ const AppContent: React.FC = () => {
       return <ProductViewerPage />;
     }
 
-    // 7. Direct Subcategory or Category HTML link (e.g. subcategoria-aceitesclasicos.html)
+    // 7. HU11: Gestión de Catálogo y Productos
+    if (
+      pathOnly === 'gestion-productos.html' ||
+      pathOnly === 'gestion-productos' ||
+      pathOnly === 'admin-productos' ||
+      pathOnly === 'admin'
+    ) {
+      return <ProductManagementPage />;
+    }
+
+    // 8. Direct Subcategory or Category HTML link (e.g. subcategoria-aceitesclasicos.html)
     const matchSubcat = getSubcategoryData(pathOnly);
     if (matchSubcat) {
       return <ProductViewerPage subcatKeyOrPath={matchSubcat.key} />;
     }
 
-    // 8. Fallback to Home
+    // 9. Fallback to Home
     return <HomePage />;
   };
 
