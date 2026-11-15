@@ -134,9 +134,24 @@ export async function getManagedProducts(): Promise<{
       .order('codigo', { ascending: true });
 
     if (!error && data && data.length > 0) {
+      const mapped: ManagedProduct[] = data.map((row: Record<string, unknown>) => ({
+        id: row.id as string | number,
+        codigo: String(row.codigo || ''),
+        nombre: String(row.nombre || ''),
+        categoria: String(row.categoria || 'Varios'),
+        marca: String(row.marca || ''),
+        precio: Number(row.precio) || 0,
+        stock_minimo: Number(row.stock_minimo !== undefined && row.stock_minimo !== null ? row.stock_minimo : 5),
+        stock_actual: Number(row.stock_actual !== undefined && row.stock_actual !== null ? row.stock_actual : (row.stock || 0)),
+        imagen: String(row.imagen || row.imagen_url || 'imagenes/pamspry.png'),
+        activo: row.activo !== false,
+        created_at: row.created_at as string | undefined,
+        updated_at: row.updated_at as string | undefined,
+      }));
+
       // Sincronizar cache local
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      return { data, source: 'supabase' };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mapped));
+      return { data: mapped, source: 'supabase' };
     }
 
     if (error) {
@@ -195,15 +210,30 @@ export async function saveManagedProduct(
   // 2. Intentar guardar en Supabase
   let savedInSupabase = false;
   try {
+    const dbPayload = {
+      codigo: newProduct.codigo,
+      nombre: newProduct.nombre,
+      categoria: newProduct.categoria,
+      marca: newProduct.marca,
+      descripcion: newProduct.nombre,
+      precio: newProduct.precio,
+      stock: newProduct.stock_actual,
+      stock_actual: newProduct.stock_actual,
+      stock_minimo: newProduct.stock_minimo,
+      imagen: newProduct.imagen,
+      imagen_url: newProduct.imagen,
+      activo: newProduct.activo,
+    };
+
     const { data, error } = await supabase
       .from('productos')
-      .insert([newProduct])
+      .insert([dbPayload])
       .select()
       .single();
 
     if (!error && data) {
       savedInSupabase = true;
-      newProduct.id = data.id;
+      newProduct.id = (data as { id: string | number }).id;
     } else if (error) {
       console.warn('Supabase insert aviso (guardando localmente):', error.message);
     }
@@ -250,9 +280,25 @@ export async function updateManagedProduct(
 
   // Intentar actualizar en Supabase
   try {
+    const dbPayload = {
+      codigo: finalProduct.codigo,
+      nombre: finalProduct.nombre,
+      categoria: finalProduct.categoria,
+      marca: finalProduct.marca,
+      descripcion: finalProduct.nombre,
+      precio: finalProduct.precio,
+      stock: finalProduct.stock_actual,
+      stock_actual: finalProduct.stock_actual,
+      stock_minimo: finalProduct.stock_minimo,
+      imagen: finalProduct.imagen,
+      imagen_url: finalProduct.imagen,
+      activo: finalProduct.activo,
+      updated_at: new Date().toISOString(),
+    };
+
     const { error } = await supabase
       .from('productos')
-      .update(finalProduct)
+      .update(dbPayload)
       .eq('codigo', codigoOriginal);
 
     if (error) {
@@ -451,7 +497,22 @@ export async function importAcceptedRows(
 
   // Intentar bulk insert en Supabase
   try {
-    const { error } = await supabase.from('productos').insert(acceptedRows);
+    const dbRows = acceptedRows.map((r) => ({
+      codigo: r.codigo,
+      nombre: r.nombre,
+      categoria: r.categoria,
+      marca: r.marca,
+      descripcion: r.nombre,
+      precio: r.precio,
+      stock: r.stock_actual,
+      stock_actual: r.stock_actual,
+      stock_minimo: r.stock_minimo,
+      imagen: r.imagen,
+      imagen_url: r.imagen,
+      activo: r.activo,
+    }));
+
+    const { error } = await supabase.from('productos').insert(dbRows);
     if (error) {
       console.warn('Supabase bulk insert aviso:', error.message);
       failedCount = acceptedRows.length;
