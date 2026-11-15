@@ -447,15 +447,12 @@ export async function importAcceptedRows(
   acceptedRows: ManagedProduct[],
   existingList: ManagedProduct[]
 ): Promise<{ successCount: number; failedCount: number }> {
-  let successCount = 0;
   let failedCount = 0;
 
   // Intentar bulk insert en Supabase
   try {
     const { error } = await supabase.from('productos').insert(acceptedRows);
-    if (!error) {
-      successCount = acceptedRows.length;
-    } else {
+    if (error) {
       console.warn('Supabase bulk insert aviso:', error.message);
       failedCount = acceptedRows.length;
     }
@@ -467,6 +464,6 @@ export async function importAcceptedRows(
   const merged = [...acceptedRows, ...existingList.filter((p) => !acceptedRows.some((a) => a.codigo === p.codigo))];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
 
-  successCount = acceptedRows.length;
+  const successCount = acceptedRows.length;
   return { successCount, failedCount };
 }
