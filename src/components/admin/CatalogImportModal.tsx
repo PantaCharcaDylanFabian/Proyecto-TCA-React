@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { ManagedProduct, ImportValidationResult } from '../../types';
 import { validateCatalogImport, importAcceptedRows } from '../../services/productService';
 import existingCatalogRaw from '../../data/productos.json';
+import depuradoCatalogRaw from '../../data/catalogo-depurado.json';
 
 interface CatalogImportModalProps {
   isOpen: boolean;
@@ -29,6 +30,14 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
     const result = validateCatalogImport(existingCatalogRaw, existingProducts);
     setValidationResult(result);
     setActiveTab(result.rejectedRows.length > 0 ? 'rejected' : 'accepted');
+  };
+
+  // Carga y valida la semilla limpia y deduplicada generada en TK11 (KAN-31)
+  const handleValidateCleanSeed = () => {
+    setImportStatus(null);
+    const result = validateCatalogImport(depuradoCatalogRaw as unknown as Record<string, unknown>, existingProducts);
+    setValidationResult(result);
+    setActiveTab(result.acceptedRows.length > 0 ? 'accepted' : 'rejected');
   };
 
   // Permite subir un archivo JSON personalizado para prueba de archivos mal formados
@@ -117,13 +126,25 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
         {/* Acciones de carga / validación */}
         <div className="flex flex-wrap gap-3 mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-200 flex-shrink-0 items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={handleValidateCleanSeed}
+              className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs sm:text-sm rounded-xl cursor-pointer border-none shadow-sm hover:shadow transition-all flex items-center gap-1.5"
+              title="Cargar catálogo depurado de TK11 con 160 productos limpios y deduplicados"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Semilla Depurada (TK11)</span>
+            </button>
+
             <button
               type="button"
               onClick={handleValidateExistingJson}
               className="px-4 py-2.5 bg-[#C32228] hover:bg-[#a00000] text-white font-extrabold text-xs sm:text-sm rounded-xl cursor-pointer border-none shadow-sm hover:shadow transition-all"
             >
-              Auditar Catálogo del Repositorio (productos.json)
+              Auditar Origen Crudo (productos.json)
             </button>
 
             <label className="px-4 py-2.5 bg-white hover:bg-gray-100 text-gray-800 font-bold text-xs sm:text-sm rounded-xl cursor-pointer border border-gray-300 shadow-sm transition-all inline-block">
