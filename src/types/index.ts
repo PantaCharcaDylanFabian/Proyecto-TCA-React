@@ -75,3 +75,36 @@ export interface ImportValidationResult {
   acceptedRows: ManagedProduct[];
   rejectedRows: { row: number; item: Partial<ManagedProduct>; errors: string[] }[];
 }
+
+export interface OrderDraftLine {
+  id?: number | string;
+  pedido_id?: string;
+  producto_id: string;
+  producto_nombre: string;
+  precio_unitario: number;
+  cantidad: number;
+  subtotal: number;
+  imagen?: string;
+}
+
+export interface OrderDraft {
+  id: string;
+  cliente_nombre: string;
+  cliente_documento: string;
+  cliente_telefono?: string;
+  cliente_direccion?: string;
+  estado: 'BORRADOR';
+  total: number;
+  notas?: string;
+  lineas: OrderDraftLine[];
+  actor?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface CustomerPreset {
+  nombre: string;
+  documento: string;
+  telefono: string;
+  direccion: string;
+}

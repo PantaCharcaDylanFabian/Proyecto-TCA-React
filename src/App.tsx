@@ -16,6 +16,7 @@ import { BebidasPage } from './pages/BebidasPage';
 import { AlcoholicasPage } from './pages/AlcoholicasPage';
 import { ProductViewerPage } from './pages/ProductViewerPage';
 import { ProductManagementPage } from './pages/ProductManagementPage';
+import { OrdersPage } from './pages/OrdersPage';
 import { getSubcategoryData } from './data/catalog';
 
 const AppContent: React.FC = () => {
@@ -98,13 +99,24 @@ const AppContent: React.FC = () => {
       return <ProductManagementPage />;
     }
 
-    // 8. Direct Subcategory or Category HTML link (e.g. subcategoria-aceitesclasicos.html)
+    // 8. HU12: Pedidos en Borrador (Ventas)
+    if (
+      pathOnly === 'pedidos.html' ||
+      pathOnly === 'pedidos' ||
+      pathOnly === 'pedidos-borrador.html' ||
+      pathOnly === 'pedidos-borrador' ||
+      pathOnly === 'ventas'
+    ) {
+      return <OrdersPage />;
+    }
+
+    // 9. Direct Subcategory or Category HTML link (e.g. subcategoria-aceitesclasicos.html)
     const matchSubcat = getSubcategoryData(pathOnly);
     if (matchSubcat) {
       return <ProductViewerPage subcatKeyOrPath={matchSubcat.key} />;
     }
 
-    // 9. Fallback to Home
+    // 10. Fallback to Home
     return <HomePage />;
   };
 
