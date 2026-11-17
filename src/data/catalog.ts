@@ -1,7 +1,12 @@
-import rawCatalog from './productos.json';
+import seed from './catalogo-depurado.json';
 import type { SubcategoryData, Product } from '../types';
 
-export const CATALOG_DATA: Record<string, SubcategoryData> = rawCatalog as Record<string, SubcategoryData>;
+// Compatibility metadata for legacy URLs. Commercial screens load the database.
+export const CATALOG_DATA: Record<string, SubcategoryData> = {};
+for (const p of seed) {
+  const group = CATALOG_DATA[p.subcategoria_slug] ??= { nombre: p.categoria, ruta: p.ruta_origen, marcas: [], productos: [] };
+  group.productos.push({ id: p.codigo, nombre: p.nombre, marca: p.marca, imagen: p.imagen, descripcion: p.descripcion });
+}
 
 /**
  * Mapping of legacy HTML filenames and URL paths to their corresponding catalog subcategory key.
@@ -58,6 +63,7 @@ export const LEGACY_PATH_MAP: Record<string, string> = {
   'chuño': 'chuno',
   'conservas-bonito': 'conservas-bonito',
   'conservadebonito': 'conservas-bonito',
+  'conservasdebonito': 'conservas-bonito',
   'conservas-atun': 'conservas-atun',
   'conservasdeatun': 'conservas-atun',
   'conservas-caballa': 'conservas-caballa',

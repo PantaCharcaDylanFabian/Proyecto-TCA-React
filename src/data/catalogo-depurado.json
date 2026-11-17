@@ -17,7 +17,9 @@
     "subcategoria_slug": "harina-preparada",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079002",
@@ -37,7 +39,9 @@
     "subcategoria_slug": "harina-preparada",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0005",
@@ -57,7 +61,9 @@
     "subcategoria_slug": "aceitunas-negras",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0006",
@@ -77,7 +83,9 @@
     "subcategoria_slug": "aceitunas-negras",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0007",
@@ -97,7 +105,9 @@
     "subcategoria_slug": "aceites-clasicos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0008",
@@ -117,7 +127,9 @@
     "subcategoria_slug": "aceites-clasicos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0009",
@@ -137,7 +149,9 @@
     "subcategoria_slug": "aceites-clasicos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0010",
@@ -157,7 +171,9 @@
     "subcategoria_slug": "aceites-clasicos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0011",
@@ -177,7 +193,9 @@
     "subcategoria_slug": "aceites-clasicos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0012",
@@ -197,7 +215,9 @@
     "subcategoria_slug": "aceitunas-verdes",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0013",
@@ -217,7 +237,9 @@
     "subcategoria_slug": "aceitunas-verdes",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-854003",
@@ -237,7 +259,9 @@
     "subcategoria_slug": "aceitunas-verdes",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-854004",
@@ -257,7 +281,9 @@
     "subcategoria_slug": "aceitunas-verdes",
     "ruta_origen": "Alimentos > Abarrotes > Aceitunas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0016",
@@ -277,7 +303,9 @@
     "subcategoria_slug": "conservas-alimentos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0017",
@@ -297,7 +325,9 @@
     "subcategoria_slug": "conservas-alimentos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0018",
@@ -317,7 +347,9 @@
     "subcategoria_slug": "conservas-alimentos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0019",
@@ -337,7 +369,9 @@
     "subcategoria_slug": "conservas-alimentos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0020",
@@ -357,7 +391,9 @@
     "subcategoria_slug": "conservas-alimentos",
     "ruta_origen": "Alimentos > Abarrotes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-042822",
@@ -377,7 +413,9 @@
     "subcategoria_slug": "arroz-anejo-superior",
     "ruta_origen": "Alimentos > Abarrotes > Arroz",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111459",
@@ -397,7 +435,9 @@
     "subcategoria_slug": "arverjas",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0001",
@@ -417,7 +457,9 @@
     "subcategoria_slug": "galletas-banadas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062567",
@@ -437,7 +479,9 @@
     "subcategoria_slug": "galletas-banadas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062148",
@@ -457,7 +501,9 @@
     "subcategoria_slug": "galletas-banadas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062994",
@@ -477,7 +523,9 @@
     "subcategoria_slug": "galletas-banadas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062995",
@@ -497,7 +545,9 @@
     "subcategoria_slug": "galletas-banadas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-257007",
@@ -517,7 +567,9 @@
     "subcategoria_slug": "chuno",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Especiales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0025",
@@ -537,7 +589,9 @@
     "subcategoria_slug": "conservas-bonito",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029085",
@@ -557,7 +611,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0027",
@@ -577,7 +633,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0028",
@@ -597,7 +655,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-228997",
@@ -617,7 +677,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029023",
@@ -637,7 +699,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029147",
@@ -657,7 +721,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-228016",
@@ -677,7 +743,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029232",
@@ -697,7 +765,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029110",
@@ -717,7 +787,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0035",
@@ -737,7 +809,9 @@
     "subcategoria_slug": "conservas-atun",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029108",
@@ -757,7 +831,9 @@
     "subcategoria_slug": "conservas-caballa",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0037",
@@ -777,7 +853,9 @@
     "subcategoria_slug": "conservas-caballa",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029152",
@@ -797,7 +875,9 @@
     "subcategoria_slug": "conservas-jurel",
     "ruta_origen": "Alimentos > Abarrotes > Conservas Marinas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0039",
@@ -817,7 +897,9 @@
     "subcategoria_slug": "endulzantes-refinados",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y Endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0040",
@@ -837,7 +919,9 @@
     "subcategoria_slug": "endulzantes-refinados",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y Endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0041",
@@ -857,7 +941,9 @@
     "subcategoria_slug": "endulzantes-refinados",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y Endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0042",
@@ -877,7 +963,9 @@
     "subcategoria_slug": "endulzantes-refinados",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y Endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111460",
@@ -897,7 +985,9 @@
     "subcategoria_slug": "frijoles",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111463",
@@ -917,7 +1007,9 @@
     "subcategoria_slug": "maiz-pop-corn",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-103045",
@@ -937,7 +1029,9 @@
     "subcategoria_slug": "habas-tostadas",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Especiales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029159",
@@ -957,7 +1051,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029300",
@@ -977,7 +1073,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029100",
@@ -997,7 +1095,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029645",
@@ -1017,7 +1117,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029236",
@@ -1037,7 +1139,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029345",
@@ -1057,7 +1161,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029355",
@@ -1077,7 +1183,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029133",
@@ -1097,7 +1205,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-029158",
@@ -1117,7 +1227,9 @@
     "subcategoria_slug": "conservas-fruta",
     "ruta_origen": "Alimentos > Abarrotes > Frutas en Conserva",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111461",
@@ -1137,7 +1249,9 @@
     "subcategoria_slug": "lentejas",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111462",
@@ -1157,7 +1271,9 @@
     "subcategoria_slug": "lentejas",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-103642",
@@ -1177,7 +1293,9 @@
     "subcategoria_slug": "quinua",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-111464",
@@ -1197,7 +1315,9 @@
     "subcategoria_slug": "quinua",
     "ruta_origen": "Alimentos > Abarrotes > Granos y Menestras",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-257009",
@@ -1217,7 +1337,9 @@
     "subcategoria_slug": "maicena",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Especiales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-080002",
@@ -1237,7 +1359,9 @@
     "subcategoria_slug": "semola",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Especiales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079366",
@@ -1257,7 +1381,9 @@
     "subcategoria_slug": "harina-sin-preparar",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Tradicionales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079367",
@@ -1277,7 +1403,9 @@
     "subcategoria_slug": "harina-sin-preparar",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Tradicionales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079364",
@@ -1297,7 +1425,9 @@
     "subcategoria_slug": "harina-sin-preparar",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Tradicionales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079361",
@@ -1317,7 +1447,9 @@
     "subcategoria_slug": "harina-sin-preparar",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Tradicionales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-079004",
@@ -1337,7 +1469,9 @@
     "subcategoria_slug": "harina-sin-preparar",
     "ruta_origen": "Alimentos > Abarrotes > Harinas Tradicionales",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-082279",
@@ -1357,7 +1491,9 @@
     "subcategoria_slug": "compotas-fruta",
     "ruta_origen": "Alimentos > Dulces y Postres > Compotas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-082282",
@@ -1377,7 +1513,9 @@
     "subcategoria_slug": "compotas-fruta",
     "ruta_origen": "Alimentos > Dulces y Postres > Compotas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-082281",
@@ -1397,7 +1535,9 @@
     "subcategoria_slug": "compotas-fruta",
     "ruta_origen": "Alimentos > Dulces y Postres > Compotas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-082280",
@@ -1417,7 +1557,9 @@
     "subcategoria_slug": "compotas-fruta",
     "ruta_origen": "Alimentos > Dulces y Postres > Compotas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-932001",
@@ -1437,7 +1579,9 @@
     "subcategoria_slug": "pure-de-papa",
     "ruta_origen": "Alimentos > Abarrotes > Alimentos Instantáneos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-103710",
@@ -1457,7 +1601,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-103706",
@@ -1477,7 +1623,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062924",
@@ -1497,7 +1645,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062056",
@@ -1517,7 +1667,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0075",
@@ -1537,7 +1689,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062988",
@@ -1557,7 +1711,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062987",
@@ -1577,7 +1733,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062111",
@@ -1597,7 +1755,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-062564",
@@ -1617,7 +1777,9 @@
     "subcategoria_slug": "galletas-planas",
     "ruta_origen": "Alimentos > Dulces y Postres > Galletas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-933002",
@@ -1637,7 +1799,9 @@
     "subcategoria_slug": "jamones-untables-y-pate",
     "ruta_origen": "Alimentos > Desayunos > Fiambres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-933001",
@@ -1657,7 +1821,9 @@
     "subcategoria_slug": "jamones-untables-y-pate",
     "ruta_origen": "Alimentos > Desayunos > Fiambres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040892",
@@ -1677,7 +1843,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040001",
@@ -1697,7 +1865,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040102",
@@ -1717,7 +1887,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040916",
@@ -1737,7 +1909,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040915",
@@ -1757,7 +1931,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040920",
@@ -1777,7 +1953,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040925",
@@ -1797,7 +1975,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040921",
@@ -1817,7 +1997,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040917",
@@ -1837,7 +2019,9 @@
     "subcategoria_slug": "infusiones-funcional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040024",
@@ -1857,7 +2041,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040030",
@@ -1877,7 +2063,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040002",
@@ -1897,7 +2085,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040029",
@@ -1917,7 +2107,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040923",
@@ -1937,7 +2129,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040912",
@@ -1957,7 +2151,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040900",
@@ -1977,7 +2173,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040898",
@@ -1997,7 +2195,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040911",
@@ -2017,7 +2217,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040919",
@@ -2037,7 +2239,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040907",
@@ -2057,7 +2261,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-040914",
@@ -2077,7 +2283,9 @@
     "subcategoria_slug": "infusiones-tradicional",
     "ruta_origen": "Alimentos > Desayunos > Infusiones",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-257010",
@@ -2097,7 +2305,9 @@
     "subcategoria_slug": "lacteos-alternativos",
     "ruta_origen": "Alimentos > Desayunos > Lácteos Alternativos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918027",
@@ -2117,7 +2327,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918021",
@@ -2137,7 +2349,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918028",
@@ -2157,7 +2371,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918026",
@@ -2177,7 +2393,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918025",
@@ -2197,7 +2415,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918022",
@@ -2217,7 +2437,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-918023",
@@ -2237,7 +2459,9 @@
     "subcategoria_slug": "margarina",
     "ruta_origen": "Alimentos > Desayunos > Lácteos y Derivados",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046014",
@@ -2257,7 +2481,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046103",
@@ -2277,7 +2503,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046012",
@@ -2297,7 +2525,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046013",
@@ -2317,7 +2547,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046016",
@@ -2337,7 +2569,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046350",
@@ -2357,7 +2591,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046830",
@@ -2377,7 +2613,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-046815",
@@ -2397,7 +2635,9 @@
     "subcategoria_slug": "mermeladas",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-928003",
@@ -2417,7 +2657,9 @@
     "subcategoria_slug": "crema-de-mani",
     "ruta_origen": "Alimentos > Desayunos > Untables",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-064621",
@@ -2437,7 +2679,9 @@
     "subcategoria_slug": "barras-de-cereal",
     "ruta_origen": "Alimentos > Dulces y Postres > Barras Energéticas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-064089",
@@ -2457,7 +2701,9 @@
     "subcategoria_slug": "barras-de-cereal",
     "ruta_origen": "Alimentos > Dulces y Postres > Barras Energéticas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-064092",
@@ -2477,7 +2723,9 @@
     "subcategoria_slug": "barras-de-cereal",
     "ruta_origen": "Alimentos > Dulces y Postres > Barras Energéticas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-064093",
@@ -2497,7 +2745,9 @@
     "subcategoria_slug": "barras-de-cereal",
     "ruta_origen": "Alimentos > Dulces y Postres > Barras Energéticas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066001",
@@ -2517,7 +2767,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0125",
@@ -2537,7 +2789,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066570",
@@ -2557,7 +2811,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066003",
@@ -2577,7 +2833,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066004",
@@ -2597,7 +2855,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066608",
@@ -2617,7 +2877,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-066610",
@@ -2637,7 +2899,9 @@
     "subcategoria_slug": "bizcochos",
     "ruta_origen": "Alimentos > Dulces y Postres > Bizcochos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-180062",
@@ -2657,7 +2921,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-179669",
@@ -2677,7 +2943,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0002",
@@ -2697,7 +2965,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0003",
@@ -2717,7 +2987,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0135",
@@ -2737,7 +3009,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0136",
@@ -2757,7 +3031,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0137",
@@ -2777,7 +3053,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0138",
@@ -2797,7 +3075,9 @@
     "subcategoria_slug": "postres-instantaneos",
     "ruta_origen": "Alimentos > Dulces y Postres > Postres",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-257003",
@@ -2817,7 +3097,9 @@
     "subcategoria_slug": "reposteria",
     "ruta_origen": "Alimentos > Dulces y Postres > Reposteria",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0004",
@@ -2837,7 +3119,9 @@
     "subcategoria_slug": "reposteria",
     "ruta_origen": "Alimentos > Dulces y Postres > Reposteria",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0141",
@@ -2857,7 +3141,9 @@
     "subcategoria_slug": "reposteria",
     "ruta_origen": "Alimentos > Dulces y Postres > Reposteria",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-217001",
@@ -2877,7 +3163,9 @@
     "subcategoria_slug": "reposteria",
     "ruta_origen": "Alimentos > Dulces y Postres > Reposteria",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0201",
@@ -2897,7 +3185,9 @@
     "subcategoria_slug": "cervezas",
     "ruta_origen": "Bebidas > Alcohólicas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0202",
@@ -2917,7 +3207,9 @@
     "subcategoria_slug": "cervezas",
     "ruta_origen": "Bebidas > Alcohólicas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "fallback_asignado"
+    "estado_imagen": "fallback_asignado",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0203",
@@ -2937,7 +3229,9 @@
     "subcategoria_slug": "cervezas",
     "ruta_origen": "Bebidas > Alcohólicas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0204",
@@ -2957,7 +3251,9 @@
     "subcategoria_slug": "cervezas",
     "ruta_origen": "Bebidas > Alcohólicas",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0211",
@@ -2977,7 +3273,9 @@
     "subcategoria_slug": "sopas",
     "ruta_origen": "Alimentos > Abarrotes > Alimentos Instantáneos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0212",
@@ -2997,7 +3295,9 @@
     "subcategoria_slug": "sopas",
     "ruta_origen": "Alimentos > Abarrotes > Alimentos Instantáneos",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0221",
@@ -3017,7 +3317,9 @@
     "subcategoria_slug": "endulzantes-naturales",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-PRD-0222",
@@ -3037,7 +3339,9 @@
     "subcategoria_slug": "endulzantes-naturales",
     "ruta_origen": "Alimentos > Abarrotes > Azúcar y endulzantes",
     "recurso_origen": "productos.json",
-    "estado_imagen": "verificada"
+    "estado_imagen": "verificada",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-LMP-0001",
@@ -3057,7 +3361,9 @@
     "subcategoria_slug": "limpieza-general",
     "ruta_origen": "Limpieza > Limpieza General",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 60
   },
   {
     "codigo": "TCA-LMP-0002",
@@ -3077,7 +3383,9 @@
     "subcategoria_slug": "limpieza-ropa",
     "ruta_origen": "Limpieza > Ropa",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 45
   },
   {
     "codigo": "TCA-LMP-0003",
@@ -3097,7 +3405,9 @@
     "subcategoria_slug": "limpieza-vajilla",
     "ruta_origen": "Limpieza > Vajilla",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 60
   },
   {
     "codigo": "TCA-LMP-0004",
@@ -3117,7 +3427,9 @@
     "subcategoria_slug": "accesorios-limpieza",
     "ruta_origen": "Limpieza > Accesorios",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-UTL-0001",
@@ -3137,7 +3449,9 @@
     "subcategoria_slug": "papeleria-oficina",
     "ruta_origen": "Útiles > Papelería",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 75
   },
   {
     "codigo": "TCA-UTL-0002",
@@ -3157,7 +3471,9 @@
     "subcategoria_slug": "archivo-organizacion",
     "ruta_origen": "Útiles > Archivo",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 45
   },
   {
     "codigo": "TCA-UTL-0003",
@@ -3177,7 +3493,9 @@
     "subcategoria_slug": "escritura-oficina",
     "ruta_origen": "Útiles > Escritura",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 30
   },
   {
     "codigo": "TCA-UTL-0004",
@@ -3197,6 +3515,8 @@
     "subcategoria_slug": "accesorios-escritorio",
     "ruta_origen": "Útiles > Accesorios",
     "recurso_origen": "doc_tca_3.3.3",
-    "estado_imagen": "icono_institucional"
+    "estado_imagen": "icono_institucional",
+    "datos_ejemplo": true,
+    "stock_objetivo": 45
   }
 ]

@@ -51,6 +51,7 @@ export interface ZoomedProduct {
 }
 
 export interface ManagedProduct {
+  datos_ejemplo?: boolean;
   id?: number | string;
   codigo: string;
   nombre: string;
@@ -58,6 +59,14 @@ export interface ManagedProduct {
   precio: number;
   stock_minimo: number;
   stock_actual: number;
+  stock_reservado?: number;
+  stock_objetivo?: number;
+  codigo_barras?: string;
+  proveedor?: string;
+  macro_categoria?: string;
+  subcategoria_slug?: string;
+  descripcion?: string;
+  version?: number;
   imagen?: string;
   marca?: string;
   activo: boolean;
@@ -83,6 +92,8 @@ export interface OrderDraftLine {
   producto_nombre: string;
   precio_unitario: number;
   cantidad: number;
+  cantidad_confirmada?: number;
+  cantidad_preparada?: number;
   subtotal: number;
   imagen?: string;
 }
@@ -93,7 +104,12 @@ export interface OrderDraft {
   cliente_documento: string;
   cliente_telefono?: string;
   cliente_direccion?: string;
-  estado: 'BORRADOR';
+  estado: 'BORRADOR' | 'CONFIRMADO' | 'CANCELADO' | 'DESPACHADO';
+  canal?: 'INTERNO' | 'WEB';
+  version?: number;
+  total_solicitado?: number;
+  constancia?: string;
+  entrega?: 'RECOJO' | 'DELIVERY';
   total: number;
   notas?: string;
   lineas: OrderDraftLine[];
@@ -107,4 +123,46 @@ export interface CustomerPreset {
   documento: string;
   telefono: string;
   direccion: string;
+}
+
+export type Role = 'GERENCIA' | 'VENTAS' | 'ALMACEN';
+export interface Profile {
+  id: string;
+  nombre: string;
+  email?: string;
+  rol: Role;
+  activo: boolean;
+}
+export interface CommercialProduct {
+  datos_ejemplo?: boolean;
+  codigo: string;
+  codigo_barras: string | null;
+  nombre: string;
+  descripcion: string;
+  categoria: string;
+  macro_categoria: string;
+  subcategoria_slug: string;
+  marca: string;
+  imagen: string;
+  precio: number;
+  disponible: number;
+}
+export interface Movement {
+  id: number;
+  producto_codigo: string;
+  tipo: 'APERTURA' | 'ENTRADA' | 'SALIDA';
+  cantidad: number;
+  saldo: number;
+  actor: string;
+  referencia: string;
+  proveedor: string;
+  created_at: string;
+}
+export interface PurchaseLine { producto_codigo: string; nombre: string; cantidad: number; }
+export interface Purchase {
+  id: string;
+  estado: 'PROPUESTA' | 'APROBADA' | 'RECIBIDA' | 'CANCELADA';
+  proveedor: string;
+  created_at: string;
+  lineas: PurchaseLine[];
 }

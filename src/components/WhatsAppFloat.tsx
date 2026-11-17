@@ -1,15 +1,15 @@
 import React from 'react';
-import { useUI } from '../context/UIContext';
+import { whatsAppUrl } from '../utils/whatsapp';
 
 export const WhatsAppFloat: React.FC = () => {
-  const { openStickyModal } = useUI();
+
 
   return (
     <button
       type="button"
-      onClick={openStickyModal}
-      aria-label="Atención por WhatsApp TCA"
-      title="Contactar con asesor de ventas TCA"
+      onClick={() => window.open(whatsAppUrl('Hola, quisiera consultar productos y atención comercial de TCA.'), '_blank', 'noopener,noreferrer')}
+      aria-label="Abrir mensaje preparado en WhatsApp"
+      title="Mensaje preparado; el envío es manual"
       className="fixed bottom-[85px] sm:bottom-[95px] right-4 sm:right-6 bg-[#25d366] hover:bg-[#20ba59] text-white w-14 h-14 rounded-full flex justify-center items-center shadow-xl hover:shadow-[0_8px_25px_rgba(37,211,102,0.6)] hover:scale-110 -translate-y-0 hover:-translate-y-1 transition-all duration-300 z-40 border-none cursor-pointer"
     >
       <svg viewBox="0 0 16 16" width="32" height="32" fill="currentColor">

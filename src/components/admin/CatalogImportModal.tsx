@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { ManagedProduct, ImportValidationResult } from '../../types';
 import { validateCatalogImport, importAcceptedRows } from '../../services/productService';
 import existingCatalogRaw from '../../data/productos.json';
@@ -21,12 +21,14 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
   const [validationResult, setValidationResult] = useState<ImportValidationResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const pendingKey = useRef<string | null>(null);
+  const reset = () => { setImportStatus(null); pendingKey.current = null; };
 
   if (!isOpen) return null;
 
   // Ejecuta la validación con el JSON existente del repositorio
   const handleValidateExistingJson = () => {
-    setImportStatus(null);
+    reset();
     const result = validateCatalogImport(existingCatalogRaw, existingProducts);
     setValidationResult(result);
     setActiveTab(result.rejectedRows.length > 0 ? 'rejected' : 'accepted');
@@ -34,7 +36,7 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
   // Carga y valida la semilla limpia y deduplicada generada en TK11 (KAN-31)
   const handleValidateCleanSeed = () => {
-    setImportStatus(null);
+    reset();
     const result = validateCatalogImport(depuradoCatalogRaw as unknown as Record<string, unknown>, existingProducts);
     setValidationResult(result);
     setActiveTab(result.acceptedRows.length > 0 ? 'accepted' : 'rejected');
@@ -44,6 +46,7 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    reset();
 
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -73,17 +76,21 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
   // Confirmar inserción SOLO de las filas aceptadas (Criterio 4 HU11)
   const handleProcessAcceptedRows = async () => {
-    if (!validationResult || validationResult.acceptedRows.length === 0) return;
+    if (!validationResult || busy) return;
 
     setBusy(true);
     try {
       const { successCount } = await importAcceptedRows(
         validationResult.acceptedRows,
-        existingProducts
+        existingProducts,
+        validationResult.rejectedRows,
+        pendingKey.current ??= crypto.randomUUID(),
       );
       setImportStatus(
-        `✓ Se importaron con éxito ${successCount} productos verificados a la base productiva. Las filas rechazadas fueron descartadas con seguridad.`
+        `✓ Se guardaron ${successCount} productos en Supabase y se registraron ${validationResult.rejectedRows.length} rechazos para auditoría.`
       );
+      pendingKey.current = null;
+      setValidationResult(null);
       onImportCompleted();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -165,7 +172,7 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
         {/* Estado de importación completada */}
         {importStatus && (
-          <div className="mb-4 p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0">
+          <div role={importStatus.startsWith('Error') ? 'alert' : 'status'} className={`mb-4 p-4 border rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0 ${importStatus.startsWith('Error') ? 'bg-red-50 border-red-300 text-red-800' : 'bg-emerald-50 border-emerald-300 text-emerald-800'}`}>
             {importStatus}
           </div>
         )}
@@ -301,12 +308,12 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
                 <button
                   type="button"
                   onClick={handleProcessAcceptedRows}
-                  disabled={busy || validationResult.acceptedRows.length === 0}
+                  disabled={busy}
                   className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm rounded-lg border-none shadow-md hover:shadow transition-all cursor-pointer"
                 >
                   {busy
                     ? 'Procesando…'
-                    : `Importar ${validationResult.acceptedRows.length} Filas Aceptadas`}
+                    : `Guardar resultado e importar ${validationResult.acceptedRows.length} filas`}
                 </button>
               </div>
             </div>

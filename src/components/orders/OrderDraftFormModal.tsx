@@ -64,8 +64,8 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
       return;
     }
 
-    const qty = Math.floor(Number(itemQuantity));
-    if (isNaN(qty) || qty <= 0) {
+    const qty = Number(itemQuantity);
+    if (!Number.isSafeInteger(qty) || qty <= 0) {
       setErrorMessage('La cantidad debe ser un número entero estrictamente positivo (> 0).');
       return;
     }
@@ -148,22 +148,18 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
       cliente_telefono: clienteTelefono.trim(),
       cliente_direccion: clienteDireccion.trim(),
       estado: 'BORRADOR',
+      version: orderToEdit?.version,
       total: Number(calculateTotal().toFixed(2)),
       notas: notas.trim(),
       lineas,
-      actor: 'ventas@tcadistrib.com',
-      created_at: orderToEdit?.created_at || new Date().toISOString(),
-      updated_at: new Date().toISOString(),
     };
 
-    const res = await onSave(draftOrder);
-    setBusy(false);
-
-    if (res.success) {
-      onClose();
-    } else {
-      setErrorMessage(res.error || 'Ocurrió un error al guardar el pedido en borrador.');
-    }
+    try {
+      const res = await onSave(draftOrder);
+      if (res.success) onClose();
+      else setErrorMessage(res.error || 'No se guardó el borrador.');
+    } catch { setErrorMessage('No se guardó el borrador. Comprueba tu conexión.'); }
+    finally { setBusy(false); }
   };
 
   const selectedProduct = availableProducts.find((p) => p.codigo === selectedProductCode);
@@ -171,14 +167,18 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
   return (
     <div
       className="fixed inset-0 bg-black/65 z-[9999] flex justify-center items-center p-3 sm:p-5 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
-      onClick={onClose}
+      onClick={() => { if (!busy) onClose(); }}
     >
       <div
         className="bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-8 relative shadow-2xl border-t-[6px] border-amber-500 my-auto max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={isEditing ? 'Editar borrador' : 'Crear borrador'}
       >
         <button
           onClick={onClose}
+          disabled={busy}
           className="absolute top-4 right-5 bg-transparent border-none text-2xl text-gray-400 hover:text-amber-600 cursor-pointer p-1 leading-none transition-colors"
           aria-label="Cerrar modal"
         >
@@ -323,7 +323,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
                   min="1"
                   step="1"
                   value={itemQuantity}
-                  onChange={(e) => setItemQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                  onChange={(e) => setItemQuantity(Number(e.target.value))}
                   className="w-full text-xs sm:text-sm p-2 bg-white border border-gray-300 rounded-lg outline-none focus:border-amber-500 font-bold"
                 />
               </div>
@@ -404,7 +404,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
                             step="1"
                             value={line.cantidad}
                             onChange={(e) =>
-                              handleUpdateLineQuantity(line.producto_id, parseInt(e.target.value) || 1)
+                              handleUpdateLineQuantity(line.producto_id, Number(e.target.value))
                             }
                             className="w-16 p-1 text-center font-bold border border-gray-300 rounded outline-none"
                           />

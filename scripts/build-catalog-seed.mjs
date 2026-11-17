@@ -324,6 +324,7 @@ for (const extProd of BUSINESS_EXTENSION_PRODUCTS) {
 }
 
 // 4. Guardar catálogo depurado en JSON
+for (const product of cleanedProducts) { product.datos_ejemplo = true; product.stock_objetivo = Math.max(product.stock_minimo * 3, product.stock_minimo + 1); }
 fs.writeFileSync(OUTPUT_JSON_PATH, JSON.stringify(cleanedProducts, null, 2), 'utf8');
 
 // 5. Generar semilla reproducible en SQL (supabase/seed.sql)
@@ -345,7 +346,11 @@ INSERT INTO public.productos (
     stock_minimo,
     imagen,
     imagen_url,
-    activo
+    activo,
+    macro_categoria,
+    subcategoria_slug,
+    stock_objetivo,
+    datos_ejemplo
 ) VALUES\n`;
 
 const sqlValues = cleanedProducts.map((p) => {
@@ -355,23 +360,12 @@ const sqlValues = cleanedProducts.map((p) => {
   const safeMarca = p.marca.replace(/'/g, "''");
   const safeImg = p.imagen.replace(/'/g, "''");
 
-  return `    ('${p.codigo}', '${safeName}', '${safeDesc}', '${safeCat}', '${safeMarca}', ${p.precio.toFixed(2)}, ${p.stock_actual}, ${p.stock_actual}, ${p.stock_minimo}, '${safeImg}', '${safeImg}', ${p.activo})`;
+  return `    ('${p.codigo}', '${safeName}', '${safeDesc}', '${safeCat}', '${safeMarca}', ${p.precio.toFixed(2)}, ${p.stock_actual}, ${p.stock_actual}, ${p.stock_minimo}, '${safeImg}', '${safeImg}', ${p.activo}, '${p.macro_categoria.replace(/'/g, "''")}', '${p.subcategoria_slug.replace(/'/g, "''")}', ${p.stock_objetivo}, true)`;
 });
 
 sqlContent += sqlValues.join(',\n') + '\n';
-sqlContent += `ON CONFLICT (codigo) DO UPDATE SET
-    nombre = EXCLUDED.nombre,
-    descripcion = EXCLUDED.descripcion,
-    categoria = EXCLUDED.categoria,
-    marca = EXCLUDED.marca,
-    precio = EXCLUDED.precio,
-    stock = EXCLUDED.stock,
-    stock_actual = EXCLUDED.stock_actual,
-    stock_minimo = EXCLUDED.stock_minimo,
-    imagen = EXCLUDED.imagen,
-    imagen_url = EXCLUDED.imagen_url,
-    activo = EXCLUDED.activo,
-    updated_at = NOW();\n`;
+// Existing stock, reservations, prices and user edits must survive a seed rerun.
+sqlContent += `ON CONFLICT (codigo) DO UPDATE SET codigo = EXCLUDED.codigo;\n`;
 
 fs.writeFileSync(OUTPUT_SEED_SQL, sqlContent, 'utf8');
 
@@ -418,7 +412,7 @@ ${brokenImagesInventory.map((b) => `| \`${b.producto_id}\` | **${b.nombre}** (\`
 2. **Estructura Canónica \`TCA-XXXXXX\`**: Se estableció un estándar uniforme:
    - Para productos cuya imagen física contiene el código oficial de producto (ej. \`079365.png\`), el código canónico es **\`TCA-079365\`**.
    - Para productos con nombres de archivo alfabéticos, se asignó una secuencia determinista **\`TCA-PRD-0001\`** a **\`TCA-PRD-XXXX\`**.
-   - **Garantía:** Cero duplicados en el 100% de la base de datos (\`UNIQUE CONSTRAINT uq_productos_codigo\`).
+   - **Garantía:** Cero duplicados en el 100% del JSON depurado; la base se verifica al aplicar migraciones (\`UNIQUE CONSTRAINT uq_productos_codigo\`).
 
 ---
 

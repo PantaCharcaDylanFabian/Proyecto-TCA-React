@@ -49,6 +49,10 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       precio: 10.0,
       stock_minimo: 5,
       stock_actual: 20,
+      stock_objetivo: 30,
+      macro_categoria: 'Otros',
+      codigo_barras: '',
+      proveedor: '',
       imagen: 'imagenes/pamspry.png',
       activo: true,
     };
@@ -78,6 +82,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
+      setGeneralError(validationErrors.map(error => error.message).join(' '));
       return;
     }
 
@@ -100,14 +105,18 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   return (
     <div
       className="fixed inset-0 bg-black/60 z-[9999] flex justify-center items-center p-4 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
-      onClick={onClose}
+      onClick={() => { if (!busy) onClose(); }}
     >
       <div
         className="bg-white w-full max-w-[620px] rounded-2xl p-6 sm:p-8 relative shadow-2xl border-t-[5px] border-[#C32228] my-8 animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={isEditing ? 'Editar producto' : 'Crear producto'}
       >
         <button
           onClick={onClose}
+          disabled={busy}
           className="absolute top-4 right-5 bg-transparent border-none text-2xl text-gray-400 hover:text-[#C32228] cursor-pointer p-1 leading-none transition-colors"
           aria-label="Cerrar modal"
         >
@@ -208,7 +217,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                 }}
                 className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white outline-none focus:border-[#C32228] transition-colors"
               >
-                {CATEGORY_OPTIONS.map((cat) => (
+                {Array.from(new Set([...CATEGORY_OPTIONS, formData.categoria, ...existingProducts.map(p => p.categoria)])).map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
                   </option>
@@ -255,7 +264,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                 min="0"
                 value={formData.stock_minimo}
                 onChange={(e) =>
-                  setFormData({ ...formData, stock_minimo: parseInt(e.target.value, 10) || 0 })
+                  setFormData({ ...formData, stock_minimo: Number(e.target.value) })
                 }
                 className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 outline-none focus:border-[#C32228] transition-colors"
               />
@@ -269,8 +278,9 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                 type="number"
                 min="0"
                 value={formData.stock_actual}
+                disabled={isEditing}
                 onChange={(e) =>
-                  setFormData({ ...formData, stock_actual: parseInt(e.target.value, 10) || 0 })
+                  setFormData({ ...formData, stock_actual: Number(e.target.value) })
                 }
                 className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 outline-none focus:border-[#C32228] transition-colors"
               />
@@ -278,6 +288,15 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           </div>
 
           {/* Fila 5: Referencia de Imagen */}
+          <p className="text-xs text-gray-600">El saldo inicial queda auditado al crear el producto. Para cambiar existencias luego, registra una entrada o despacho.</p>
+          <div className="tca-stack">
+            <label className="tca-check"><input type="checkbox" checked={formData.datos_ejemplo || false} onChange={e => setFormData({ ...formData, datos_ejemplo: e.target.checked })} />Precios y existencias de ejemplo</label>
+            <label>Objetivo de reposición<input type="number" min={formData.stock_minimo} step="1" value={formData.stock_objetivo ?? Math.max(30, formData.stock_minimo)} onChange={e => setFormData({ ...formData, stock_objetivo: Number(e.target.value) })} /></label>
+            <label>Código de barras (opcional)<input maxLength={80} value={formData.codigo_barras || ''} onChange={e => setFormData({ ...formData, codigo_barras: e.target.value })} /></label>
+            <label>Proveedor habitual<input maxLength={200} value={formData.proveedor || ''} onChange={e => setFormData({ ...formData, proveedor: e.target.value })} /></label>
+            <label>Línea comercial<select value={formData.macro_categoria || 'Otros'} onChange={e => setFormData({ ...formData, macro_categoria: e.target.value })}>{['Alimentos','Bebidas','Limpieza del Hogar','Útiles de Oficina','Cuidado Personal','Otros'].map(c => <option key={c}>{c}</option>)}</select></label>
+            <label>Subcategoría (identificador opcional)<input value={formData.subcategoria_slug || ''} onChange={e => setFormData({ ...formData, subcategoria_slug: e.target.value })} placeholder="Ej. papeleria-oficina" /></label>
+          </div>
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wider">
               Referencia de Imagen (Ruta en public/imagenes/)

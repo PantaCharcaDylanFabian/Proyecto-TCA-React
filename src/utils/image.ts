@@ -2,7 +2,7 @@
  * Returns the normalized path for an image located in public/imagenes/
  */
 export function getImageUrl(path: string | undefined): string {
-  if (!path) return '/imagenes/placeholder.png';
+  if (!path) return '/imagenes/TCALOGOINICIO.png';
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
     return path;
   }

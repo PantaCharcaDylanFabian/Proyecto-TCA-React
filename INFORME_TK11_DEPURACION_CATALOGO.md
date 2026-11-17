@@ -2,7 +2,7 @@
 
 **Proyecto:** Distribuidora TCA — Catálogo Digital
 **Responsable asignado:** Joel Jesús Gallo Tume
-**Fecha:** 15/11/2026
+**Fecha:** 17/11/2026
 **Artefactos producidos:**
 - [`src/data/catalogo-depurado.json`](src/data/catalogo-depurado.json): Catálogo maestro depurado y deduplicado (160 ítems).
 - [`supabase/seed.sql`](supabase/seed.sql): Semilla reproducible SQL para Supabase/PostgreSQL.
@@ -48,7 +48,7 @@ Durante la auditoría se detectaron **9 referencias** a imágenes en `productos.
 2. **Estructura Canónica `TCA-XXXXXX`**: Se estableció un estándar uniforme:
    - Para productos cuya imagen física contiene el código oficial de producto (ej. `079365.png`), el código canónico es **`TCA-079365`**.
    - Para productos con nombres de archivo alfabéticos, se asignó una secuencia determinista **`TCA-PRD-0001`** a **`TCA-PRD-XXXX`**.
-   - **Garantía:** Cero duplicados en el 100% de la base de datos (`UNIQUE CONSTRAINT uq_productos_codigo`).
+   - **Garantía:** Cero duplicados en el 100% del JSON depurado; la base se verifica al aplicar migraciones (`UNIQUE CONSTRAINT uq_productos_codigo`).
 
 ---
 
