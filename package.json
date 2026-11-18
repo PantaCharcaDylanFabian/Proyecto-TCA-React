@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test:e2e": "playwright test",
     "check": "tsc -b --pretty false",
+    "quality:audit": "node scripts/antigravity-code-quality.mjs",
     "test:live": "node --env-file=.env scripts/test-live-concurrency.mjs"
   },
   "dependencies": {
