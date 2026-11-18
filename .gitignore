@@ -27,3 +27,9 @@ dist-ssr
 !.env.example
 test-results/
 playwright-report/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
