@@ -2,17 +2,41 @@ name: TCA Cloud & DevOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, APF-03 ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, APF-03 ]
 
 jobs:
   # ============================================================================
-  # 1. Verificación e Integración Continua del Frontend (React + Vite + Tailwind)
+  # 1. Verificación Continua de la Base de Datos (PostgreSQL / Supabase / RLS)
+  # ============================================================================
+  database-ci:
+    name: Database CI (PGlite, Migrations, RLS, Seed Integrity)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js LTS (v20+)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar Dependencias del Monorepo
+        run: npm ci
+
+      - name: Ejecución de Pruebas Unitarias de Base de Datos
+        run: npm run test:bd
+
+  # ============================================================================
+  # 2. Verificación e Integración Continua del Frontend (React + Vite + Tailwind)
   # ============================================================================
   frontend-ci:
     name: Frontend CI (Types, Lint, Tests, Build)
     runs-on: ubuntu-latest
+    needs: database-ci
 
     steps:
       - name: Checkout del Repositorio
@@ -27,28 +51,28 @@ jobs:
       - name: Instalar Dependencias
         run: npm ci
 
-      - name: Verificación Estricta de Tipos TypeScript
-        run: npx tsc -b
+      - name: Verificación Estricta de Tipos TypeScript (Frontend)
+        run: npm --prefix front run check
 
-      - name: Análisis Estático de Código (ESLint)
-        run: npm run lint
+      - name: Análisis Estático de Código ESLint (Frontend)
+        run: npm --prefix front run lint
 
       - name: Ejecución de Pruebas Unitarias de Operación
-        run: npm test
+        run: npm --prefix front test
 
       - name: Compilación de Producción (Vite Build)
-        run: npm run build
+        run: npm --prefix front run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://qxapzaxrmvmlbvecyefm.supabase.co' }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'sb_publishable_dummy_key_ci' }}
 
   # ============================================================================
-  # 2. Pipeline de Modelos de Inteligencia Artificial y Machine Learning (APF 3)
+  # 3. Pipeline de Modelos de Inteligencia Artificial y Machine Learning (APF 3)
   # ============================================================================
   ai-ml-ci:
     name: AI/ML Suite & Algoritmos (Búsqueda, Regresión, Clasificación, Ensambles)
     runs-on: ubuntu-latest
-    needs: frontend-ci
+    needs: [database-ci, frontend-ci]
 
     steps:
       - name: Checkout del Repositorio
@@ -65,27 +89,30 @@ jobs:
           pip install numpy pandas scikit-learn matplotlib
 
       - name: Ejecución de Algoritmos de Búsqueda (BFS, DFS, A*, Hill Climbing)
-        run: python ai_analytics/search_algorithms.py
+        run: python back/ai_analytics/search_algorithms.py
 
       - name: Entrenamiento y Validación de Regresión (Lineal y Polinomial)
-        run: python ai_analytics/regression_models.py
+        run: python back/ai_analytics/regression_models.py
 
       - name: Entrenamiento y Validación de Regresión Logística (Riesgo Stockout)
-        run: python ai_analytics/classification_models.py
+        run: python back/ai_analytics/classification_models.py
 
       - name: Benchmark de Machine Learning (SVM, KNN, Decision Tree, Boosting)
-        run: python ai_analytics/ml_algorithms.py
+        run: python back/ai_analytics/ml_algorithms.py
 
       - name: Prueba del Agente Autónomo TCA
-        run: python ai_analytics/tca_agent.py
+        run: python back/ai_analytics/tca_agent.py
+
+      - name: Auditoría Automatizada de Calidad Antigravity
+        run: npm run quality:audit
 
   # ============================================================================
-  # 3. Despliegue Continuo (CD) a Entorno Cloud (Vercel / Supabase)
+  # 4. Despliegue Continuo (CD) a Entorno Cloud (Vercel / Supabase)
   # ============================================================================
   cloud-cd:
     name: Continuous Deployment a Cloud Staging
     runs-on: ubuntu-latest
-    needs: [frontend-ci, ai-ml-ci]
+    needs: [database-ci, frontend-ci, ai-ml-ci]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:

@@ -7,10 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Node modules & build artifacts
+node_modules/
+dist/
+dist-ssr/
 *.local
+front/dist/
 
 # Editor directories and files
 .vscode/*
@@ -22,9 +24,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
 .env
 .env.*
+front/.env
+front/.env.*
 !.env.example
+!front/.env.example
+
+# Test reports
 test-results/
 playwright-report/
 
@@ -32,4 +41,4 @@ playwright-report/
 __pycache__/
 *.py[cod]
 *$py.class
-
+back/ai_analytics/__pycache__/

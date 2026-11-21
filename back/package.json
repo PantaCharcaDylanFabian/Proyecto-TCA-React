@@ -1,0 +1,21 @@
+{
+  "name": "tca-back",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Módulo Backend, API REST y Suite de Inteligencia Artificial (APF 3) de Distribuidora TCA",
+  "scripts": {
+    "start": "node api/server.js",
+    "quality:audit": "node scripts/antigravity-code-quality.mjs",
+    "test:live": "node scripts/test-live-concurrency.mjs",
+    "ai:all": "python ai_analytics/main.py",
+    "ai:search": "python ai_analytics/search_algorithms.py",
+    "ai:regression": "python ai_analytics/regression_models.py",
+    "ai:classification": "python ai_analytics/classification_models.py",
+    "ai:ml": "python ai_analytics/ml_algorithms.py",
+    "ai:agent": "python ai_analytics/tca_agent.py"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0"
+  }
+}

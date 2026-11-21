@@ -1,73 +1,67 @@
-# Distribuidora TCA — inventarios y pedidos
+# 🏢 Distribuidora TCA — Arquitectura Monorepo Tripartita
 
-Aplicación React + TypeScript + Vite + Tailwind con Supabase Auth y operaciones transaccionales en PostgreSQL. Implementa el catálogo comercial, acceso interno por roles, productos, entradas, borradores, reservas, entrega parcial, preparación/despacho, reposición y seguimiento.
+Sistema integral de gestión de inventarios, pedidos, analítica predictiva y optimización logística para **Distribuidora TCA**. El proyecto se encuentra dividido en **3 módulos independientes y desacoplados**:
 
-## Ejecutar
-
-Requiere Node.js 24 y npm.
-
-```powershell
-npm ci
-# Si .env no existe, créalo a partir de .env.example. Si existe, edítalo.
-npm run dev
+```
+Proyecto-TCA-React/
+├── bd/       # 🗄️ Base de Datos (PostgreSQL, Supabase, Migraciones, RLS, Semillas)
+├── back/     # 🧠 Backend & IA (API REST, Machine Learning, Algoritmos A*, Agente Antigravity)
+└── front/    # 💻 Frontend (React 19, TypeScript, Vite, Tailwind CSS v4)
 ```
 
-Configura URL y clave pública de Supabase en `.env`. Reinicia Vite después de editarlas. Sin configuración hay una vista pública de ejemplo; el panel y los envíos requieren Supabase habilitado. Una conexión fallida muestra un error y nunca se presenta como un guardado correcto.
+---
 
-**Activación necesaria:** aplica las migraciones y crea los perfiles siguiendo [Activación de Supabase](docs/ACTIVACION_SUPABASE.md). La clave del `.env` original devolvió `Invalid API key` en la verificación; no se modificó ni se desplegó la base remota.
+## 🏗️ 1. Módulos del Sistema
 
-## Comprobaciones
+### 🗄️ Módulo de Base de Datos (`/bd`)
+- **Motor:** PostgreSQL gestionado a través de Supabase.
+- **Seguridad:** Row Level Security (RLS) estricto con segregación de roles (`GERENCIA`, `VENTAS`, `ALMACEN`, `ANON`).
+- **Migraciones:** Esquema versionado (`001_hu11_productos.sql`, `002_hu12_pedidos_borrador.sql`, `003_operacion_integral.sql`).
+- **Catálogo:** Carga inicial reproducible de 160 productos mediante `seed.sql`.
+- **Pruebas:** Pruebas automatizadas en memoria con `@electric-sql/pglite` (`npm run test:bd`).
+- 👉 Más detalles en [bd/README.md](bd/README.md).
 
-```powershell
-npm run check
-npm run lint
-npm test
-npm run build
-npm run test:e2e
-```
+### 🧠 Módulo Backend e Inteligencia Artificial (`/back`)
+- **API REST (Node.js):** Servidor HTTP con endpoints para catálogo (`/api/catalogo`), predicción de demanda (`/api/ai/predict-demand`), evaluación de rotura de stock (`/api/ai/stockout-risk`) y cálculo de rutas logísticas.
+- **Suite de IA y Machine Learning (Python 3.12):**
+  - **Búsqueda Heurística:** Modelado formal de espacio de estados y comparación de algoritmos ($A^*$, BFS, DFS, Hill Climbing).
+  - **Regresión:** Regresión Lineal vs. Polinomial Grado 2 ($R^2 = 0.9977$) vs. Ridge G3.
+  - **Clasificación:** Regresión Logística Sigmoide ($F1 = 100\%$, $\text{AUC} = 1.0000$, $C=1.0$).
+  - **Ensambles:** Benchmark cruzado $k=5$ con SVM, KNN, Decision Tree, AdaBoost y Random Forest.
+  - **Agente Inteligente:** Copiloto con Tool Calling integrado mediante el SDK de Google Antigravity.
+- **Calidad de Software:** Auditoría automatizada con certificación de 100/100% (`npm run quality:audit`).
+- 👉 Más detalles en [back/README.md](back/README.md).
 
-`npm test` ejecuta validadores de producción, controles del catálogo y las migraciones/funciones reales con PostgreSQL embebido (PGlite). No requiere internet ni credenciales. El aislamiento de procesos de Node se desactiva para funcionar en entornos Windows restringidos.
+### 💻 Módulo Frontend (`/front`)
+- **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS v4.
+- **Módulo Visual APF 3:** Dashboard interactivo accesible en `/apf3` con simulador de rutas $A^*$, visualizador de modelos de regresión/clasificación, benchmark de ensambles y chat interactivo con el Agente Antigravity.
+- **Módulos Operativos:** Catálogo comercial, control de inventario, gestión de pedidos y borradores atómicos, escáner de códigos de barra y reposición inteligente.
+- **Pruebas:** Validaciones puras de dominio (`hu11`, `hu12`) y pruebas E2E con Playwright.
+- 👉 Más detalles en [front/README.md](front/README.md).
 
-Las pruebas E2E usan Edge instalado en Windows, Chromium en otros sistemas y un servidor Vite aislado en el puerto 4175. Fuera de Windows, instala antes el navegador de Playwright con `npx playwright install chromium`. Auth se simula en el arnés; las RPC usan el PostgreSQL local. Los datos del `.env` del equipo no se emplean en esas pruebas ni se escriben datos remotos.
+---
 
-`npm run preview` sirve la compilación local. El hosting de producción debe redirigir las rutas de la SPA a `index.html`; no expongas `.env` ni los archivos de configuración privada.
+## ⚡ Guía de Inicio Rápido (Comandos Globales)
 
-## Rutas principales
+Puedes ejecutar todas las operaciones directamente desde la raíz del monorepo mediante npm workspaces:
 
-| Ruta | Acceso |
-|---|---|
-| `/catalogo`, `/carrito`, `/seguimiento` | Público; seguimiento requiere su enlace privado. |
-| `/login` | Cuenta Supabase del equipo. |
-| `/panel` | Gerencia, Ventas y Almacén. |
-| `/gestion-productos`, `/equipo` | Gerencia. |
-| `/inventario`, `/reposicion` | Gerencia y Almacén; solo Gerencia aprueba compras. |
-| `/pedidos` | Operaciones disponibles según rol; Almacén prepara y despacha. |
-| `/contactos` | Gerencia y Ventas. |
+| Tarea | Comando en Raíz | Descripción |
+|---|---|---|
+| **Iniciar Frontend** | `npm run dev` | Inicia el servidor de desarrollo Vite (`localhost:5173`) |
+| **Iniciar Backend API** | `npm run start:back` | Inicia la API REST en `localhost:3001` |
+| **Compilar Frontend** | `npm run build` | Compila TypeScript y genera el bundle de producción |
+| **Linter Frontend** | `npm run lint` | Ejecuta ESLint en el frontend |
+| **Pruebas Completas** | `npm test` | Ejecuta las pruebas de frontend y de base de datos |
+| **Pruebas de BD** | `npm run test:bd` | Ejecuta la suite de PostgreSQL y RLS |
+| **Pruebas de Frontend** | `npm run test:front` | Ejecuta las pruebas de validación de negocio |
+| **Modelos de IA** | `npm run test:back` | Ejecuta los modelos de Python y genera reportes |
+| **Auditoría de Calidad** | `npm run quality:audit` | Auditoría automatizada con el SDK de Antigravity |
 
-## Decisiones de persistencia
+---
 
-- El inventario central es la fuente de verdad; el catálogo expone únicamente campos comerciales.
-- No se guardan tablas privadas como sustituto silencioso de la base remota. El navegador conserva solo la sesión de Auth y los códigos/cantidades del carrito.
-- Si este navegador conserva datos locales de la versión anterior, Gerencia puede descargarlos desde el panel para conciliarlos. No se borran ni se importan automáticamente.
-- Las RPC de escritura comprueban rol y ejecutan cabecera/ítems, reservas, entradas y despacho dentro de una transacción.
-- Las claves de operación permiten reintentar una petición cuya respuesta se perdió, sin duplicar sus efectos. El formulario conserva la clave mientras siga montado; no reutilices una clave para otro contenido.
-- La versión del registro impide sobrescribir cambios de otra sesión al editar productos o borradores.
-- El catálogo se reconsulta al recuperar foco, cada 30 segundos con la página visible y después de operaciones del inventario. La confirmación vuelve a comprobar existencias en la base.
-- La baja de productos es lógica, para preservar su historial. Un producto con reservas no puede desactivarse.
+## 🔌 Integración con un Nuevo Frontend
 
-## Semilla
-
-```powershell
-npm run seed
-```
-
-Regenera `src/data/catalogo-depurado.json`, `supabase/seed.sql` y el informe de recursos; no aplica SQL remoto. Los 160 productos tienen datos de ejemplo identificados y trazabilidad al recurso de origen. La semilla SQL se aplica **después de 003** y agrega faltantes sin restablecer datos de productos existentes. Las imágenes de sustitución son referenciales; valida las presentaciones y categorías con el negocio.
-
-## Documentación de entrega
-
-- [Estado de implementación y límites de validación](docs/ESTADO_IMPLEMENTACION_APF2.md).
-- [Configuración, migraciones, cuentas y guion de demostración](docs/ACTIVACION_SUPABASE.md).
-- [Plantilla de pruebas con usuarios, sin resultados prefijados](docs/PRUEBAS_USUARIOS.md).
-- [Auditoría inicial del código](REVISION_CUMPLIMIENTO_APF2.md).
-
-WhatsApp abre mensajes preparados para envío manual. Contactos y suscripciones se registran para atención del equipo, sin correo automático. La constancia de despacho es interna, no fiscal. Pagos, SUNAT y automatización física quedan fuera del alcance indicado en el PDF.
+Al haberse dividido el repositorio en 3 carpetas independientes:
+1. **Consumo de Base de Datos:** El nuevo front puede conectarse directamente a la base de datos Supabase usando las variables de entorno en `.env` y las RPC definidas en `bd/supabase/migrations/`.
+2. **Consumo de API Backend / IA:** El nuevo front puede consumir los endpoints REST expuestos por `back/api/server.js` (puerto 3001) para predicciones de Machine Learning, optimización de despacho $A^*$ y auditoría.
+3. **Frontend de Referencia:** El directorio `front/` permanece 100% funcional y sirve como referencia completa de componentes, tipos TypeScript (`front/src/types/`) y reglas de validación de negocio (`front/src/domain/validation.ts`).

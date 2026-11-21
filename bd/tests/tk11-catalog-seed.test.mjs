@@ -4,13 +4,33 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT_DIR = process.cwd();
-const DEPURADO_PATH = path.join(ROOT_DIR, 'src', 'data', 'catalogo-depurado.json');
-const SEED_SQL_PATH = path.join(ROOT_DIR, 'supabase', 'seed.sql');
-const REPORT_MD_PATH = path.join(ROOT_DIR, 'INFORME_TK11_DEPURACION_CATALOGO.md');
-const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+const findFirst = (candidates) => candidates.find(c => fs.existsSync(c)) || candidates[0];
+
+const DEPURADO_PATH = findFirst([
+  path.join(ROOT_DIR, 'data', 'catalogo-depurado.json'),
+  path.join(ROOT_DIR, 'bd', 'data', 'catalogo-depurado.json'),
+  path.join(ROOT_DIR, 'front', 'src', 'data', 'catalogo-depurado.json'),
+  path.join(ROOT_DIR, '..', 'front', 'src', 'data', 'catalogo-depurado.json'),
+]);
+
+const SEED_SQL_PATH = findFirst([
+  path.join(ROOT_DIR, 'supabase', 'seed.sql'),
+  path.join(ROOT_DIR, 'bd', 'supabase', 'seed.sql'),
+  path.join(ROOT_DIR, '..', 'bd', 'supabase', 'seed.sql'),
+]);
+
+const REPORT_MD_PATH = findFirst([
+  path.join(ROOT_DIR, 'INFORME_TK11_DEPURACION_CATALOGO.md'),
+  path.join(ROOT_DIR, '..', 'INFORME_TK11_DEPURACION_CATALOGO.md'),
+]);
+
+const PUBLIC_DIR = findFirst([
+  path.join(ROOT_DIR, 'front', 'public'),
+  path.join(ROOT_DIR, '..', 'front', 'public'),
+]);
 
 test('TK11 Criterio 1: Origen JSON depurado debe existir y ser válido', () => {
-  assert.ok(fs.existsSync(DEPURADO_PATH), 'catalogo-depurado.json debe existir');
+  assert.ok(fs.existsSync(DEPURADO_PATH), `catalogo-depurado.json debe existir en ${DEPURADO_PATH}`);
   const content = fs.readFileSync(DEPURADO_PATH, 'utf8');
   const products = JSON.parse(content);
   assert.ok(Array.isArray(products), 'Debe ser un arreglo de productos');
