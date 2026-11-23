@@ -2,11 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT_DIR = process.cwd();
-const CATALOG_PATH = path.join(ROOT_DIR, 'src', 'data', 'productos.json');
-const IMAGES_DIR = path.join(ROOT_DIR, 'public', 'imagenes');
-const OUTPUT_JSON_PATH = path.join(ROOT_DIR, 'src', 'data', 'catalogo-depurado.json');
+const REPO_ROOT = path.resolve(ROOT_DIR, '..');
+const CATALOG_PATH = path.join(REPO_ROOT, 'front', 'src', 'data', 'productos.json');
+const IMAGES_DIR = path.join(REPO_ROOT, 'front', 'public', 'imagenes');
+const OUTPUT_JSON_PATH = path.join(ROOT_DIR, 'data', 'catalogo-depurado.json');
 const OUTPUT_SEED_SQL = path.join(ROOT_DIR, 'supabase', 'seed.sql');
-const OUTPUT_REPORT_MD = path.join(ROOT_DIR, 'INFORME_TK11_DEPURACION_CATALOGO.md');
+const OUTPUT_REPORT_MD = path.join(REPO_ROOT, 'INFORME_TK11_DEPURACION_CATALOGO.md');
 
 // 1. Cargar catálogo origen
 const rawCatalog = JSON.parse(fs.readFileSync(CATALOG_PATH, 'utf8'));

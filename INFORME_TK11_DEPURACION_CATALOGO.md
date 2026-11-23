@@ -2,7 +2,7 @@
 
 **Proyecto:** Distribuidora TCA — Catálogo Digital
 **Responsable asignado:** Joel Jesús Gallo Tume
-**Fecha:** 17/11/2026
+**Fecha:** 23/11/2026
 **Artefactos producidos:**
 - [`src/data/catalogo-depurado.json`](src/data/catalogo-depurado.json): Catálogo maestro depurado y deduplicado (160 ítems).
 - [`supabase/seed.sql`](supabase/seed.sql): Semilla reproducible SQL para Supabase/PostgreSQL.
