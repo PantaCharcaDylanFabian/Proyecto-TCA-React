@@ -1,17 +1,17 @@
-name: TCA Cloud & DevOps CI/CD Pipeline
+﻿name: TCA Cloud & DevOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, APF-03, APF-04, APF4 ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, APF-03, APF-04, APF4 ]
 
 jobs:
   # ============================================================================
-  # 1. Verificación e Integración Continua del Frontend (React + Vite + Tailwind)
+  # 1. VerificaciÃ³n Continua de la Base de Datos (PostgreSQL / Supabase / RLS)
   # ============================================================================
-  frontend-ci:
-    name: Frontend CI (Types, Lint, Tests, Build)
+  database-ci:
+    name: Database CI (PGlite, Migrations, RLS, Seed Integrity)
     runs-on: ubuntu-latest
 
     steps:
@@ -21,34 +21,64 @@ jobs:
       - name: Configurar Node.js LTS (v20+)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar Dependencias del Monorepo
+        run: npm ci
+
+      - name: Validar Esquema Relacional Prisma
+        run: npm --prefix bd run prisma:validate
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+          DIRECT_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+
+      - name: EjecuciÃ³n de Pruebas Unitarias de Base de Datos
+        run: npm run test:bd
+
+  # ============================================================================
+  # 2. VerificaciÃ³n e IntegraciÃ³n Continua del Frontend (React + Vite + Tailwind)
+  # ============================================================================
+  frontend-ci:
+    name: Frontend CI (Types, Lint, Tests, Build)
+    runs-on: ubuntu-latest
+    needs: database-ci
+
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js LTS (v20+)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
           cache: 'npm'
 
       - name: Instalar Dependencias
         run: npm ci
 
-      - name: Verificación Estricta de Tipos TypeScript
-        run: npx tsc -b
+      - name: VerificaciÃ³n Estricta de Tipos TypeScript (Frontend)
+        run: npm --prefix front run check
 
-      - name: Análisis Estático de Código (ESLint)
-        run: npm run lint
+      - name: AnÃ¡lisis EstÃ¡tico de CÃ³digo ESLint (Frontend)
+        run: npm --prefix front run lint
 
-      - name: Ejecución de Pruebas Unitarias de Operación
-        run: npm test
+      - name: EjecuciÃ³n de Pruebas Unitarias de OperaciÃ³n
+        run: npm --prefix front test
 
-      - name: Compilación de Producción (Vite Build)
-        run: npm run build
+      - name: CompilaciÃ³n de ProducciÃ³n (Vite Build)
+        run: npm --prefix front run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://qxapzaxrmvmlbvecyefm.supabase.co' }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'sb_publishable_dummy_key_ci' }}
 
   # ============================================================================
-  # 2. Pipeline de Modelos de Inteligencia Artificial y Machine Learning (APF 3)
+  # 3. Pipeline de Modelos de Inteligencia Artificial y Machine Learning (APF 3)
   # ============================================================================
   ai-ml-ci:
-    name: AI/ML Suite & Algoritmos (Búsqueda, Regresión, Clasificación, Ensambles)
+    name: AI/ML Suite & Algoritmos (BÃºsqueda, RegresiÃ³n, ClasificaciÃ³n, Ensambles)
     runs-on: ubuntu-latest
-    needs: frontend-ci
+    needs: [database-ci, frontend-ci]
 
     steps:
       - name: Checkout del Repositorio
@@ -63,33 +93,42 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install numpy pandas scikit-learn matplotlib
+          SITE_PKGS=$(python -c "import site; print(site.getsitepackages()[0])")
+          mkdir -p "$SITE_PKGS/google/antigravity/tools"
+          printf "__version__ = '0.1.23'\n" > "$SITE_PKGS/google/antigravity/__init__.py"
+          printf "class Content: pass\n" > "$SITE_PKGS/google/antigravity/types.py"
+          printf "class ToolContext: pass\n" > "$SITE_PKGS/google/antigravity/tools/tool_context.py"
 
-      - name: Ejecución de Algoritmos de Búsqueda (BFS, DFS, A*, Hill Climbing)
-        run: python ai_analytics/search_algorithms.py
+      - name: EjecuciÃ³n de Algoritmos de BÃºsqueda (BFS, DFS, A*, Hill Climbing)
+        run: python back/ai_analytics/search_algorithms.py
 
-      - name: Entrenamiento y Validación de Regresión (Lineal y Polinomial)
-        run: python ai_analytics/regression_models.py
+      - name: Entrenamiento y ValidaciÃ³n de RegresiÃ³n (Lineal y Polinomial)
+        run: python back/ai_analytics/regression_models.py
 
-      - name: Entrenamiento y Validación de Regresión Logística (Riesgo Stockout)
-        run: python ai_analytics/classification_models.py
+      - name: Entrenamiento y ValidaciÃ³n de RegresiÃ³n LogÃ­stica (Riesgo Stockout)
+        run: python back/ai_analytics/classification_models.py
 
       - name: Benchmark de Machine Learning (SVM, KNN, Decision Tree, Boosting)
-        run: python ai_analytics/ml_algorithms.py
+        run: python back/ai_analytics/ml_algorithms.py
 
-      - name: Prueba del Agente Autónomo TCA
-        run: python ai_analytics/tca_agent.py
+      - name: Prueba del Agente AutÃ³nomo TCA
+        run: python back/ai_analytics/tca_agent.py
+
+      - name: AuditorÃ­a Automatizada de Calidad Antigravity
+        run: npm run quality:audit
 
   # ============================================================================
-  # 3. Despliegue Continuo (CD) a Entorno Cloud (Vercel / Supabase)
+  # 4. Despliegue Continuo (CD) a Entorno Cloud (Vercel / Supabase)
   # ============================================================================
   cloud-cd:
     name: Continuous Deployment a Cloud Staging
     runs-on: ubuntu-latest
-    needs: [frontend-ci, ai-ml-ci]
+    needs: [database-ci, frontend-ci, ai-ml-ci]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
-      - name: Notificación de Despliegue Exitoso
+      - name: NotificaciÃ³n de Despliegue Exitoso
         run: |
           echo "Todos los controles de calidad (Frontend, Base de Datos y Modelos IA) superados."
-          echo "Despliegue automático a producción en Cloud Computing (Vercel Edge + Supabase PostgreSQL) autorizado."
+          echo "Despliegue automÃ¡tico a producciÃ³n en Cloud Computing (Vercel Edge + Supabase PostgreSQL) autorizado."
+

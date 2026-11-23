@@ -27,6 +27,7 @@ const TeamPage=lazy(()=>import('./pages/TeamPage').then(m=>({default:m.TeamPage}
 const ContactsPage=lazy(()=>import('./pages/ContactsPage').then(m=>({default:m.ContactsPage})));
 const MarcasPage=lazy(()=>import('./pages/MarcasPage').then(m=>({default:m.MarcasPage})));
 const NosotrosPage=lazy(()=>import('./pages/NosotrosPage').then(m=>({default:m.NosotrosPage})));
+const APF3AnalyticsPage=lazy(()=>import('./pages/APF3AnalyticsPage').then(m=>({default:m.APF3AnalyticsPage})));
 
 function AppContent(){
   const {currentPath,navigate}=useUI();
@@ -45,6 +46,7 @@ function AppContent(){
     if(path==='marcas')return <MarcasPage/>;
     if(path==='nosotros')return <NosotrosPage/>;
     if(path==='login')return <LoginPage/>;
+    if(['apf3','apf-03','ia','ia-analytics','analytics','ia-devops'].includes(path))return <APF3AnalyticsPage/>;
     if(path==='carrito')return <CartPage/>;
     if(path==='seguimiento')return <TrackingPage/>;
     if(['panel','dashboard'].includes(path))return <InternalAccess roles={['GERENCIA','VENTAS','ALMACEN']}><DashboardPage/></InternalAccess>;

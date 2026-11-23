@@ -1,0 +1,7 @@
+# Requerimientos de Python para la Suite de Inteligencia Artificial y Machine Learning (APF 3)
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.4.0
+matplotlib>=3.8.0
+google-antigravity
+jupyter>=1.0.0

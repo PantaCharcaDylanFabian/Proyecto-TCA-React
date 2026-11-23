@@ -6,6 +6,7 @@ import { Notice } from './OperationUI';
 export function TeamNavigation() {
   const auth = useAuth(); const { navigate, currentPath } = useUI(); const [error, setError] = useState('');
   const links = [
+    ['/apf3','✨ APF 3 (IA & DevOps)',true],
     ['/catalogo','Catálogo',true],['/carrito','Carrito',true],['/panel','Panel',!!auth.profile],
     ['/gestion-productos','Productos',auth.can('GERENCIA')],['/inventario','Inventario',auth.can('GERENCIA','ALMACEN')],
     ['/pedidos','Pedidos',auth.can('GERENCIA','VENTAS','ALMACEN')],['/reposicion','Reposición',auth.can('GERENCIA','ALMACEN')],
