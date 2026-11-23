@@ -1,4 +1,4 @@
-name: TCA Cloud & DevOps CI/CD Pipeline
+﻿name: TCA Cloud & DevOps CI/CD Pipeline
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   # ============================================================================
-  # 1. Verificación Continua de la Base de Datos (PostgreSQL / Supabase / RLS)
+  # 1. VerificaciÃ³n Continua de la Base de Datos (PostgreSQL / Supabase / RLS)
   # ============================================================================
   database-ci:
     name: Database CI (PGlite, Migrations, RLS, Seed Integrity)
@@ -21,7 +21,7 @@ jobs:
       - name: Configurar Node.js LTS (v20+)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Instalar Dependencias del Monorepo
@@ -33,11 +33,11 @@ jobs:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
           DIRECT_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
 
-      - name: Ejecución de Pruebas Unitarias de Base de Datos
+      - name: EjecuciÃ³n de Pruebas Unitarias de Base de Datos
         run: npm run test:bd
 
   # ============================================================================
-  # 2. Verificación e Integración Continua del Frontend (React + Vite + Tailwind)
+  # 2. VerificaciÃ³n e IntegraciÃ³n Continua del Frontend (React + Vite + Tailwind)
   # ============================================================================
   frontend-ci:
     name: Frontend CI (Types, Lint, Tests, Build)
@@ -51,22 +51,22 @@ jobs:
       - name: Configurar Node.js LTS (v20+)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Instalar Dependencias
         run: npm ci
 
-      - name: Verificación Estricta de Tipos TypeScript (Frontend)
+      - name: VerificaciÃ³n Estricta de Tipos TypeScript (Frontend)
         run: npm --prefix front run check
 
-      - name: Análisis Estático de Código ESLint (Frontend)
+      - name: AnÃ¡lisis EstÃ¡tico de CÃ³digo ESLint (Frontend)
         run: npm --prefix front run lint
 
-      - name: Ejecución de Pruebas Unitarias de Operación
+      - name: EjecuciÃ³n de Pruebas Unitarias de OperaciÃ³n
         run: npm --prefix front test
 
-      - name: Compilación de Producción (Vite Build)
+      - name: CompilaciÃ³n de ProducciÃ³n (Vite Build)
         run: npm --prefix front run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://qxapzaxrmvmlbvecyefm.supabase.co' }}
@@ -76,7 +76,7 @@ jobs:
   # 3. Pipeline de Modelos de Inteligencia Artificial y Machine Learning (APF 3)
   # ============================================================================
   ai-ml-ci:
-    name: AI/ML Suite & Algoritmos (Búsqueda, Regresión, Clasificación, Ensambles)
+    name: AI/ML Suite & Algoritmos (BÃºsqueda, RegresiÃ³n, ClasificaciÃ³n, Ensambles)
     runs-on: ubuntu-latest
     needs: [database-ci, frontend-ci]
 
@@ -94,22 +94,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pandas scikit-learn matplotlib
 
-      - name: Ejecución de Algoritmos de Búsqueda (BFS, DFS, A*, Hill Climbing)
+      - name: EjecuciÃ³n de Algoritmos de BÃºsqueda (BFS, DFS, A*, Hill Climbing)
         run: python back/ai_analytics/search_algorithms.py
 
-      - name: Entrenamiento y Validación de Regresión (Lineal y Polinomial)
+      - name: Entrenamiento y ValidaciÃ³n de RegresiÃ³n (Lineal y Polinomial)
         run: python back/ai_analytics/regression_models.py
 
-      - name: Entrenamiento y Validación de Regresión Logística (Riesgo Stockout)
+      - name: Entrenamiento y ValidaciÃ³n de RegresiÃ³n LogÃ­stica (Riesgo Stockout)
         run: python back/ai_analytics/classification_models.py
 
       - name: Benchmark de Machine Learning (SVM, KNN, Decision Tree, Boosting)
         run: python back/ai_analytics/ml_algorithms.py
 
-      - name: Prueba del Agente Autónomo TCA
+      - name: Prueba del Agente AutÃ³nomo TCA
         run: python back/ai_analytics/tca_agent.py
 
-      - name: Auditoría Automatizada de Calidad Antigravity
+      - name: AuditorÃ­a Automatizada de Calidad Antigravity
         run: npm run quality:audit
 
   # ============================================================================
@@ -122,7 +122,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
-      - name: Notificación de Despliegue Exitoso
+      - name: NotificaciÃ³n de Despliegue Exitoso
         run: |
           echo "Todos los controles de calidad (Frontend, Base de Datos y Modelos IA) superados."
-          echo "Despliegue automático a producción en Cloud Computing (Vercel Edge + Supabase PostgreSQL) autorizado."
+          echo "Despliegue automÃ¡tico a producciÃ³n en Cloud Computing (Vercel Edge + Supabase PostgreSQL) autorizado."
