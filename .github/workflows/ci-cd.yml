@@ -2,9 +2,9 @@ name: TCA Cloud & DevOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop, APF-03 ]
+    branches: [ main, develop, APF-03, APF-04, APF4 ]
   pull_request:
-    branches: [ main, develop, APF-03 ]
+    branches: [ main, develop, APF-03, APF-04, APF4 ]
 
 jobs:
   # ============================================================================
