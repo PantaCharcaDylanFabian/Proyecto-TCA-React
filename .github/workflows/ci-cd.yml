@@ -27,6 +27,12 @@ jobs:
       - name: Instalar Dependencias del Monorepo
         run: npm ci
 
+      - name: Validar Esquema Relacional Prisma
+        run: npm --prefix bd run prisma:validate
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+          DIRECT_URL: "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+
       - name: Ejecución de Pruebas Unitarias de Base de Datos
         run: npm run test:bd
 

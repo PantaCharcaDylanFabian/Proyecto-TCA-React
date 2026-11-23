@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Producto {
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  codigo            String        @unique @db.Text
+  nombre            String        @db.Text
+  descripcion       String?       @db.Text
+  categoria         String        @db.Text
+  precio            Decimal       @db.Decimal(10, 2)
+  stock             Int           @default(0)
+  stock_actual      Int           @default(0)
+  stock_minimo      Int           @default(5)
+  imagen            String?       @db.Text
+  imagen_url        String?       @db.Text
+  marca             String?       @db.Text
+  activo            Boolean       @default(true)
+  datos_ejemplo     Boolean       @default(false)
+  codigo_barras     String?       @db.Text
+  proveedor         String        @default("") @db.Text
+  macro_categoria   String        @default("Otros") @db.Text
+  subcategoria_slug String        @default("") @db.Text
+  stock_objetivo    Int           @default(30)
+  stock_reservado   Int           @default(0)
+  version           Int           @default(1)
+  created_at        DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime      @default(now()) @updatedAt @db.Timestamptz(6)
+
+  pedido_lineas     PedidoLinea[]
+  reservas          Reserva[]
+  movimientos       Movimiento[]
+  compra_lineas     CompraLinea[]
+
+  @@index([codigo], map: "idx_productos_codigo")
+  @@index([categoria], map: "idx_productos_categoria")
+  @@index([nombre], map: "idx_productos_nombre")
+  @@map("productos")
+}
+
+model Perfil {
+  id     String  @id @db.Uuid
+  nombre String  @db.Text
+  rol    String  @db.Text
+  activo Boolean @default(true)
+
+  @@map("perfiles")
+}
+
+model Cliente {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  documento  String   @unique @db.Text
+  nombre     String   @db.Text
+  telefono   String   @default("") @db.Text
+  direccion  String   @default("") @db.Text
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  pedidos    Pedido[]
+
+  @@map("clientes")
+}
+
+model Pedido {
+  id                String        @id @db.Text
+  cliente_nombre    String        @db.Text
+  cliente_documento String?       @db.Text
+  cliente_telefono  String?       @db.Text
+  cliente_direccion String?       @db.Text
+  estado            String        @default("BORRADOR") @db.Text
+  total             Decimal       @default(0) @db.Decimal(10, 2)
+  notas             String?       @db.Text
+  actor             String?       @default("ventas@tcadistrib.com") @db.Text
+  canal             String        @default("INTERNO") @db.Text
+  cliente_id        String?       @db.Uuid
+  version           Int           @default(1)
+  total_solicitado  Decimal       @default(0) @db.Decimal(14, 2)
+  entrega           String        @default("RECOJO") @db.Text
+  constancia        String?       @db.Text
+  token_seguimiento String        @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  operacion_id      String?       @unique @db.Uuid
+  created_at        DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime      @default(now()) @updatedAt @db.Timestamptz(6)
+
+  cliente           Cliente?      @relation(fields: [cliente_id], references: [id])
+  lineas            PedidoLinea[]
+  reservas          Reserva[]
+
+  @@index([estado], map: "idx_pedidos_estado")
+  @@index([cliente_nombre], map: "idx_pedidos_cliente")
+  @@index([created_at(sort: Desc)], map: "idx_pedidos_creado")
+  @@map("pedidos")
+}
+
+model PedidoLinea {
+  id                  BigInt   @id @default(autoincrement())
+  pedido_id           String   @db.Text
+  producto_id         String   @db.Text
+  producto_nombre     String   @db.Text
+  precio_unitario     Decimal  @db.Decimal(10, 2)
+  cantidad            Int
+  subtotal            Decimal  @db.Decimal(10, 2)
+  cantidad_confirmada Int      @default(0)
+  cantidad_preparada  Int      @default(0)
+  imagen              String   @default("") @db.Text
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+
+  pedido              Pedido   @relation(fields: [pedido_id], references: [id], onDelete: Cascade)
+  producto            Producto @relation(fields: [producto_id], references: [codigo], onUpdate: Cascade)
+
+  @@unique([pedido_id, producto_id], map: "tca_order_product_unique")
+  @@index([pedido_id], map: "idx_pedido_lineas_pedido")
+  @@index([producto_id], map: "idx_pedido_lineas_producto")
+  @@map("pedido_lineas")
+}
+
+model Reserva {
+  pedido_id       String   @db.Text
+  producto_codigo String   @db.Text
+  cantidad        Int
+
+  pedido          Pedido   @relation(fields: [pedido_id], references: [id])
+  producto        Producto @relation(fields: [producto_codigo], references: [codigo], onUpdate: Cascade)
+
+  @@id([pedido_id, producto_codigo])
+  @@map("reservas")
+}
+
+model Movimiento {
+  id              BigInt   @id @default(autoincrement())
+  producto_codigo String   @db.Text
+  tipo            String   @db.Text
+  cantidad        Int
+  saldo           Int
+  actor           String?  @db.Uuid
+  referencia      String   @default("") @db.Text
+  proveedor       String   @default("") @db.Text
+  operacion_id    String   @db.Uuid
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+
+  producto        Producto @relation(fields: [producto_codigo], references: [codigo], onUpdate: Cascade)
+
+  @@unique([operacion_id, producto_codigo])
+  @@map("movimientos")
+}
+
+model Compra {
+  id         String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  estado     String        @default("PROPUESTA") @db.Text
+  proveedor  String        @default("") @db.Text
+  actor      String        @db.Uuid
+  created_at DateTime      @default(now()) @db.Timestamptz(6)
+
+  lineas     CompraLinea[]
+
+  @@map("compras")
+}
+
+model CompraLinea {
+  compra_id       String   @db.Uuid
+  producto_codigo String   @db.Text
+  cantidad        Int
+
+  compra          Compra   @relation(fields: [compra_id], references: [id])
+  producto        Producto @relation(fields: [producto_codigo], references: [codigo], onUpdate: Cascade)
+
+  @@id([compra_id, producto_codigo])
+  @@map("compra_lineas")
+}
+
+model Contacto {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tipo         String   @db.Text
+  nombre       String   @db.Text
+  email        String   @db.Text
+  telefono     String   @default("") @db.Text
+  operacion_id String   @unique @db.Uuid
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("contactos")
+}
+
+model Importacion {
+  id         String   @id @db.Uuid
+  actor      String   @db.Uuid
+  aceptadas  Int
+  rechazos   Json
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("importaciones")
+}
