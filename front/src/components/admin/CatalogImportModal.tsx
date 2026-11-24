@@ -1,3 +1,4 @@
+import { FormDialog } from '../FormDialog';
 import React, { useRef, useState } from 'react';
 import type { ManagedProduct, ImportValidationResult } from '../../types';
 import { validateCatalogImport, importAcceptedRows } from '../../services/productService';
@@ -101,24 +102,7 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
   };
 
   return (
-    <div
-      className="tca-form-overlay fixed inset-0 bg-black/65 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div
-        className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-9 relative shadow-2xl border-t-[6px] border-[#C32228]"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="catalog-import-title"
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-5 bg-transparent border-none text-2xl text-gray-400 hover:text-[#C32228] cursor-pointer p-1 leading-none transition-colors"
-          aria-label="Cerrar modal"
-        >
-          &times;
-        </button>
+    <FormDialog title="Importar catálogo JSON" className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-9 relative shadow-2xl border-t-[6px] border-[#C32228]" busy={busy} onClose={onClose}>
 
         {/* Header */}
         <div className="mb-6 flex-shrink-0">
@@ -298,13 +282,6 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={onClose}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 font-bold text-xs rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-                >
-                  Cerrar
-                </button>
-                <button
-                  type="button"
                   onClick={handleProcessAcceptedRows}
                   disabled={busy}
                   className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm rounded-lg border-none shadow-md hover:shadow transition-all cursor-pointer"
@@ -317,7 +294,6 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
             </div>
           </div>
         )}
-      </div>
-    </div>
+    </FormDialog>
   );
 };

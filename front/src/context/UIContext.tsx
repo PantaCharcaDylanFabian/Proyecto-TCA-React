@@ -90,14 +90,12 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({ children }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (zoomedProduct) setZoomedProduct(null);
-        else if (isCatalogModalOpen) setIsCatalogModalOpen(false);
-        else if (isStickyModalOpen) setIsStickyModalOpen(false);
         else if (isSidebarOpen) setIsSidebarOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [zoomedProduct, isCatalogModalOpen, isStickyModalOpen, isSidebarOpen]);
+  }, [zoomedProduct, isSidebarOpen]);
 
   return (
     <UIContext.Provider

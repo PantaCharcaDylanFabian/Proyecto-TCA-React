@@ -263,7 +263,11 @@ button:not(:disabled), select { cursor: pointer; }
   .tca-operation-toolbar > .tca-button { width: 100%; }
 }
 .tca-product-actions { gap: 6px; margin: 0; }
-html:has(.tca-form-overlay) { overflow: hidden; }
+html:has(dialog.tca-modal[open]) { overflow: hidden; }
+dialog.tca-modal { position: fixed; inset: 0; margin: auto; width: calc(100% - 2rem); color: inherit; }
+.tca-modal::backdrop { background: #0009; backdrop-filter: blur(3px); }
+.tca-modal-close { position: sticky; z-index: 1; top: 0; float: right; display: grid; place-items: center; width: 36px; height: 36px; margin-left: 8px; border: 1px solid var(--tca-border); border-radius: 50%; color: #474d57; background: white; font-size: 1.5rem; line-height: 1; }
+.tca-modal-close:hover { color: var(--tca-red); }
 .tca-form-dialog {
   max-height: calc(100dvh - 2rem);
   min-width: 0;

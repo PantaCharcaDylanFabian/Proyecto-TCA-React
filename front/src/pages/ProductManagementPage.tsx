@@ -54,7 +54,7 @@ export function ProductManagementPage() {
 
   return <Page title="Gestión de productos" description="Administra los códigos, precios, imágenes y parámetros de reposición del catálogo.">
     <ResourceStatus {...resource} retry={resource.refresh} />
-    <Notice error={action.error} message={action.message} />
+    {!formOpen && <Notice error={action.error} message={action.message} />}
 
     <section className="tca-card tca-operation-panel" aria-labelledby="product-actions">
       <h2 id="product-actions">Agregar al catálogo</h2>

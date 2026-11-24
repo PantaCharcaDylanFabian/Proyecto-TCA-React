@@ -45,7 +45,7 @@ export function OrdersPage() {
     return { success:saved, error: saved ? undefined : failure || 'No se guardó el borrador. Comprueba tu conexión.' };
   };
   return <Page title="Pedidos y despacho" description="Atiende solicitudes web o internas, confirma lo disponible y prepara cada producto antes de despachar.">
-    <ResourceStatus {...resource} retry={resource.refresh} /><Notice error={action.error} message={action.message} />
+    <ResourceStatus {...resource} retry={resource.refresh} />{!formOpen && <Notice error={action.error} message={action.message} />}
     <section className="tca-card tca-operation-panel no-print" aria-labelledby="order-list-heading">
     <h2 id="order-list-heading" ref={listHeading} tabIndex={-1}>Listado de pedidos</h2>
     <div className="tca-row tca-operation-toolbar"><label className="grow">Buscar pedido o cliente<input type="search" value={filter} onChange={e => setFilter(e.target.value)} /></label>

@@ -1,6 +1,15 @@
 import { test, expect, login } from './fixtures';
 import { asUser, call } from '../../../bd/tests/helpers/database.mjs';
 import { antigravityService, PIURA_EDGES, PIURA_NODES } from '../../../back/services/antigravityService.js';
+import type { Page } from '@playwright/test';
+
+async function checkExplicitClose(page: Page) {
+  const dialog = page.getByRole('dialog');
+  await page.mouse.click(2, 2);
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeVisible();
+}
 
 test('Almacén compara dos escenarios de abastecimiento con la API de previsiones', async ({ page }) => {
   await login(page, 'warehouse');
@@ -195,6 +204,8 @@ test('Ventas no entra a inventario y la entrega parcial exige aceptación explí
   await expect(unitsInOrder).toHaveValue('24');
   await expect(page.getByText('Ya en el pedido: 24 unidades')).toBeVisible();
   await page.getByRole('button',{name:'Guardar Pedido en Borrador',exact:true}).click();
+  await expect(page.getByRole('dialog').getByText('Borrador guardado. No se reservó ni descontó stock.')).toBeVisible();
+  await page.getByRole('button', { name: 'Cerrar modal' }).click();
   await expect(page.getByRole('button',{name:'Entregar lo disponible'})).toBeDisabled();
   await page.getByRole('button', { name: 'Volver al listado' }).click();
   const detailButton = page.getByRole('button', { name: 'Ver detalle' });
@@ -221,6 +232,7 @@ test('Gerencia crea un producto y revisa una propuesta; Almacén recibe la compr
   const importDialog = page.getByRole('dialog', { name: 'Importar catálogo JSON' });
   await expect(importDialog).toBeInViewport({ ratio: 1 });
   await expect(importDialog.getByRole('heading', { name: 'Importar catálogo JSON' })).toBeInViewport();
+  await checkExplicitClose(page);
   await importDialog.getByRole('button', { name: 'Cerrar modal' }).click();
   await page.getByRole('searchbox', { name: 'Buscar producto' }).fill('sin coincidencias');
   await expect(page.getByText('Ningún producto coincide con los filtros.')).toBeVisible();
@@ -230,14 +242,19 @@ test('Gerencia crea un producto y revisa una propuesta; Almacén recibe la compr
   await expect(page.getByRole('dialog')).toBeInViewport({ ratio: 1 });
   await expect(page.getByRole('dialog').getByRole('heading')).toBeInViewport();
   await page.getByLabel('Código único').fill('DEMO-NEW');await page.getByPlaceholder('Ej. ACEITE DE OLIVA EXTRA VIRGEN 500ML').fill('PRODUCTO NUEVO');await page.getByRole('button',{name:'Registrar Producto',exact:true}).click();await expect(page.getByText('Producto guardado en el inventario central. Código: DEMO-NEW.')).toBeVisible();
+  await checkExplicitClose(page);
+  await page.getByRole('button', { name: 'Cerrar modal' }).click();
   await page.getByRole('button', { name: 'Crear producto', exact: true }).click();
   const codeField = page.getByLabel('Código único');
   await expect(codeField).toHaveValue('');
   const suggested = await codeField.getAttribute('placeholder');
   expect(suggested).toMatch(/^TCA-[A-F0-9]{16}$/);
   await page.getByPlaceholder('Ej. ACEITE DE OLIVA EXTRA VIRGEN 500ML').fill('PRODUCTO AUTOMÁTICO');
+  await checkExplicitClose(page);
+  await expect(page.getByPlaceholder('Ej. ACEITE DE OLIVA EXTRA VIRGEN 500ML')).toHaveValue('PRODUCTO AUTOMÁTICO');
   await page.getByRole('button', { name: 'Registrar Producto', exact: true }).click();
   await expect(page.getByText(`Producto guardado en el inventario central. Código: ${suggested}.`)).toBeVisible();
+  await page.getByRole('button', { name: 'Cerrar modal' }).click();
   await page.reload();
   await expect(page.getByRole('row').filter({ hasText: 'PRODUCTO AUTOMÁTICO' })).toContainText(suggested!);
   await page.goto('/reposicion');await page.getByRole('checkbox',{name:'Seleccionar LEJÍA DEMO'}).check();await page.getByLabel('Proveedor de la propuesta').fill('Proveedor Demo');await page.getByRole('button',{name:'Crear propuesta revisable'}).click();await expect(page.getByText('Propuesta creada para revisión. No se envió al proveedor.')).toBeVisible();
@@ -261,6 +278,8 @@ test('pedido interno: borrador, reserva, preparación y constancia de despacho',
   await login(page,'manager');await page.locator('.tca-team').getByRole('link',{name:'Pedidos',exact:true}).click();await page.getByRole('button',{name:'Nuevo borrador',exact:true}).click();
   await page.getByPlaceholder('Ej. Bodega San José E.I.R.L.').fill('CLIENTE DE PRUEBA');await page.getByRole('button',{name:'+ Agregar al Pedido',exact:true}).click();await page.getByRole('button',{name:'Guardar Pedido en Borrador',exact:true}).click();
   await expect(page.getByText('Borrador guardado. No se reservó ni descontó stock.')).toBeVisible();
+  await checkExplicitClose(page);
+  await page.getByRole('button', { name: 'Cerrar modal' }).click();
   await page.getByRole('button',{name:'Confirmar y reservar',exact:true}).click();await expect(page.getByText('Pedido confirmado. Las unidades fueron reservadas.')).toBeVisible();
   await page.getByLabel('Código',{exact:true}).fill('123456789');await page.getByLabel('Cantidad preparada',{exact:true}).fill('10');await page.getByRole('button',{name:'Registrar preparación',exact:true}).click();
   await expect(page.getByText('Preparación guardada.')).toBeVisible();await page.getByRole('button',{name:'Confirmar despacho',exact:true}).click();
@@ -270,9 +289,11 @@ test('pedido interno: borrador, reserva, preparación y constancia de despacho',
 test('contacto persistido y descarga CSV real',async({page})=>{
   await page.goto('/');await page.locator('footer').getByRole('button',{name:'Solicitar contacto',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'Solicitar contacto'});
+  await checkExplicitClose(page);
   await dialog.getByLabel('Nombre o razón social').fill('PERSONA DEMO');await dialog.getByLabel('Correo',{exact:true}).fill('demo@example.test');await dialog.getByLabel('Teléfono').fill('900123456');await dialog.getByRole('button',{name:'Enviar solicitud',exact:true}).click();
   await expect(dialog.getByText(/Solicitud registrada/)).toBeVisible();await dialog.getByRole('button',{name:'Cerrar contacto'}).click();
   await page.getByRole('button',{name:/CATÁLOGO|DESCARGAR/i}).first().click();
+  await checkExplicitClose(page);
   const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Descargar CSV',exact:true}).click();const download=await downloadPromise;expect(download.suggestedFilename()).toBe('catalogo-tca.csv');
 });
 

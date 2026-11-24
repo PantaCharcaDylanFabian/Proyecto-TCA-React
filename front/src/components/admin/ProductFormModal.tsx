@@ -1,3 +1,4 @@
+import { FormDialog } from '../FormDialog';
 import React, { useState } from 'react';
 import type { ManagedProduct, ProductValidationError } from '../../types';
 import { validateProduct } from '../../services/productService';
@@ -70,6 +71,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
   const [errors, setErrors] = useState<ProductValidationError[]>([]);
   const [busy, setBusy] = useState(false);
+  const [savedCode, setSavedCode] = useState('');
   const [generalError, setGeneralError] = useState('');
 
   if (!isOpen) return null;
@@ -80,6 +82,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (busy || savedCode) return;
     setGeneralError('');
 
     const product = { ...formData, codigo: formData.codigo.trim() || automaticCode };
@@ -102,7 +105,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       if (!result.success) {
         setGeneralError(result.error || 'Error al guardar el producto');
       } else {
-        onClose();
+        setSavedCode(product.codigo);
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -113,25 +116,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   };
 
   return (
-    <div
-      className="tca-form-overlay fixed inset-0 bg-black/60 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
-      onClick={() => { if (!busy) onClose(); }}
-    >
-      <div
-        className="tca-form-dialog bg-white w-full max-w-[620px] rounded-2xl p-6 sm:p-8 relative shadow-2xl border-t-[5px] border-[#C32228]"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-label={isEditing ? 'Editar producto' : 'Crear producto'}
-      >
-        <button
-          onClick={onClose}
-          disabled={busy}
-          className="absolute top-4 right-5 bg-transparent border-none text-2xl text-gray-400 hover:text-[#C32228] cursor-pointer p-1 leading-none transition-colors"
-          aria-label="Cerrar modal"
-        >
-          &times;
-        </button>
+    <FormDialog title={isEditing ? 'Editar producto' : 'Crear producto'} className="tca-form-dialog bg-white w-full max-w-[620px] rounded-2xl p-6 sm:p-8 relative shadow-2xl border-t-[5px] border-[#C32228]" busy={busy} onClose={onClose}>
 
         <div className="mb-6">
           <h3 className="text-xl sm:text-2xl font-black text-gray-900 m-0 mt-2">
@@ -148,7 +133,8 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
+        <form onSubmit={handleSubmit}>
+          <fieldset disabled={busy || !!savedCode} className="flex min-w-0 flex-col gap-4 text-left">
           {/* Fila 1: Código y Marca */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -348,24 +334,17 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
           {/* Botones de acción */}
           <div className="flex flex-wrap justify-end gap-3 pt-4 border-t border-gray-100 mt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={busy}
-              className="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-bold text-sm hover:bg-gray-50 transition-colors cursor-pointer"
-            >
-              Cancelar
-            </button>
+            {savedCode ? <p role="status" className="tca-success">Producto guardado en el inventario central. Código: {savedCode}.</p> :
             <button
               type="submit"
               disabled={busy}
               className="px-6 py-2.5 rounded-lg bg-[#C32228] hover:bg-[#a00000] text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer border-none flex items-center gap-2"
             >
               {busy ? 'Guardando…' : isEditing ? 'Actualizar Producto' : 'Registrar Producto'}
-            </button>
+            </button>}
           </div>
+          </fieldset>
         </form>
-      </div>
-    </div>
+    </FormDialog>
   );
 };

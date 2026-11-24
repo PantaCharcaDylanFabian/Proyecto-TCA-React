@@ -1,3 +1,4 @@
+import { FormDialog } from '../FormDialog';
 import React, { useState } from 'react';
 import type { OrderDraft, OrderDraftLine, ManagedProduct } from '../../types';
 import { CLIENTES_PRUEBA } from '../../services/orderService';
@@ -36,6 +37,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
   const [itemQuantity, setItemQuantity] = useState<number>(10);
 
   const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
@@ -127,6 +129,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (busy || saved) return;
     setErrorMessage(null);
 
     if (!clienteNombre.trim()) {
@@ -156,7 +159,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
 
     try {
       const res = await onSave(draftOrder);
-      if (res.success) onClose();
+      if (res.success) setSaved(true);
       else setErrorMessage(res.error || 'No se guardó el borrador.');
     } catch { setErrorMessage('No se guardó el borrador. Comprueba tu conexión.'); }
     finally { setBusy(false); }
@@ -166,25 +169,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
   const selectedQuantity = lineas.find((line) => line.producto_id === selectedProductCode)?.cantidad ?? 0;
 
   return (
-    <div
-      className="tca-form-overlay fixed inset-0 bg-black/65 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
-      onClick={() => { if (!busy) onClose(); }}
-    >
-      <div
-        className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-8 relative shadow-2xl border-t-[6px] border-amber-500"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-label={isEditing ? 'Editar borrador' : 'Crear borrador'}
-      >
-        <button
-          onClick={onClose}
-          disabled={busy}
-          className="absolute top-4 right-5 bg-transparent border-none text-2xl text-gray-400 hover:text-amber-600 cursor-pointer p-1 leading-none transition-colors"
-          aria-label="Cerrar modal"
-        >
-          &times;
-        </button>
+    <FormDialog title={isEditing ? 'Editar borrador' : 'Crear borrador'} className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-8 relative shadow-2xl border-t-[6px] border-amber-500" busy={busy} onClose={onClose}>
 
         {/* Header */}
         <div className="mb-4 flex-shrink-0">
@@ -208,7 +193,8 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col">
+        <form onSubmit={handleSubmit}>
+          <fieldset disabled={busy || saved} className="flex min-w-0 flex-col">
           {/* Sección 1: Datos del Cliente */}
           <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-4 flex-shrink-0">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -449,25 +435,18 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs sm:text-sm rounded-xl cursor-pointer border-none transition-colors"
-              >
-                Cancelar
-              </button>
-
+              {saved ? <p role="status" className="tca-success">Borrador guardado. No se reservó ni descontó stock.</p> :
               <button
                 type="submit"
                 disabled={busy}
                 className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs sm:text-sm rounded-xl cursor-pointer border-none shadow-md hover:shadow-lg transition-all disabled:opacity-50"
               >
                 {busy ? 'Guardando...' : isEditing ? 'Actualizar Borrador' : 'Guardar Pedido en Borrador'}
-              </button>
+              </button>}
             </div>
           </div>
+          </fieldset>
         </form>
-      </div>
-    </div>
+    </FormDialog>
   );
 };
