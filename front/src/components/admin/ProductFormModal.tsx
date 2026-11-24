@@ -36,6 +36,16 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   existingProducts,
 }) => {
   const isEditing = !!productToEdit;
+  const [automaticCode] = useState(() => {
+    if (productToEdit) return '';
+    let code: string;
+    do {
+      const bytes = crypto.getRandomValues(new Uint8Array(8));
+      const suffix = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+      code = `TCA-${suffix.toUpperCase()}`;
+    } while (existingProducts.some(product => product.codigo.toUpperCase() === code));
+    return code;
+  });
 
   const [formData, setFormData] = useState<ManagedProduct>(() => {
     if (productToEdit) {
@@ -72,9 +82,9 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
     e.preventDefault();
     setGeneralError('');
 
-    // Validación cliente estricta según HU11
+    const product = { ...formData, codigo: formData.codigo.trim() || automaticCode };
     const validationErrors = validateProduct(
-      formData,
+      product,
       existingProducts,
       isEditing,
       productToEdit?.codigo
@@ -88,7 +98,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
     setBusy(true);
     try {
-      const result = await onSave(formData);
+      const result = await onSave(product);
       if (!result.success) {
         setGeneralError(result.error || 'Error al guardar el producto');
       } else {
@@ -104,11 +114,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 z-[9999] flex justify-center items-center p-4 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+      className="tca-form-overlay fixed inset-0 bg-black/60 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
       onClick={() => { if (!busy) onClose(); }}
     >
       <div
-        className="bg-white w-full max-w-[620px] rounded-2xl p-6 sm:p-8 relative shadow-2xl border-t-[5px] border-[#C32228] my-8 animate-in zoom-in-95 duration-200"
+        className="tca-form-dialog bg-white w-full max-w-[620px] rounded-2xl p-6 sm:p-8 relative shadow-2xl border-t-[5px] border-[#C32228]"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -124,14 +134,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
         </button>
 
         <div className="mb-6">
-          <span className="text-[11px] font-black tracking-widest text-[#C32228] bg-red-50 px-2.5 py-1 rounded-full uppercase">
-            HU11 · Gestión de Catálogo
-          </span>
           <h3 className="text-xl sm:text-2xl font-black text-gray-900 m-0 mt-2">
             {isEditing ? `Editar Producto: ${productToEdit.codigo}` : 'Registrar Nuevo Producto'}
           </h3>
           <p className="text-xs sm:text-sm text-gray-500 m-0 mt-1">
-            Todos los campos marcados con asterisco (*) son obligatorios y auditados por el sistema.
+            Los campos marcados con asterisco (*) son obligatorios.
           </p>
         </div>
 
@@ -145,22 +152,27 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           {/* Fila 1: Código y Marca */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wider">
-                Código Único *
+              <label htmlFor="product-internal-code" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wider">
+                Código único{isEditing ? ' *' : ''}
               </label>
               <input
                 type="text"
-                required
+                id="product-internal-code"
+                required={isEditing}
+                aria-describedby={isEditing ? undefined : 'product-code-help'}
                 value={formData.codigo}
                 onChange={(e) => {
                   setFormData({ ...formData, codigo: e.target.value.toUpperCase() });
                   setErrors(errors.filter((err) => err.field !== 'codigo'));
                 }}
-                placeholder="Ej. 029085 o PRD-001"
+                placeholder={automaticCode}
                 className={`w-full px-3.5 py-2.5 border rounded-lg text-sm text-gray-900 font-mono outline-none transition-colors ${
                   getFieldError('codigo') ? 'border-red-500 bg-red-50' : 'border-gray-300 focus:border-[#C32228]'
                 }`}
               />
+              {!isEditing && <p id="product-code-help" className="mt-1 text-xs text-gray-600">
+                Deja el campo vacío para usar el código sugerido o escribe uno propio.
+              </p>}
               {getFieldError('codigo') && (
                 <p className="text-red-600 text-[11px] font-bold mt-1 m-0">{getFieldError('codigo')}</p>
               )}
@@ -335,7 +347,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           </div>
 
           {/* Botones de acción */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-100 mt-2">
+          <div className="flex flex-wrap justify-end gap-3 pt-4 border-t border-gray-100 mt-2">
             <button
               type="button"
               onClick={onClose}

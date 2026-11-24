@@ -163,14 +163,15 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
   };
 
   const selectedProduct = availableProducts.find((p) => p.codigo === selectedProductCode);
+  const selectedQuantity = lineas.find((line) => line.producto_id === selectedProductCode)?.cantidad ?? 0;
 
   return (
     <div
-      className="fixed inset-0 bg-black/65 z-[9999] flex justify-center items-center p-3 sm:p-5 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+      className="tca-form-overlay fixed inset-0 bg-black/65 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
       onClick={() => { if (!busy) onClose(); }}
     >
       <div
-        className="bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-8 relative shadow-2xl border-t-[6px] border-amber-500 my-auto max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-200"
+        className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-8 relative shadow-2xl border-t-[6px] border-amber-500"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -187,26 +188,16 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
 
         {/* Header */}
         <div className="mb-4 flex-shrink-0">
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[11px] font-black tracking-widest text-amber-800 bg-amber-100 px-3 py-0.5 rounded-full uppercase">
-              HU12 · Módulo de Ventas
-            </span>
-            <span className="text-[11px] font-bold text-gray-700 bg-gray-100 px-2.5 py-0.5 rounded-full uppercase">
-              {isEditing ? `Editando ${orderToEdit?.id}` : 'Nuevo Registro'}
-            </span>
-          </div>
-
-          <h3 className="text-xl sm:text-2xl font-black text-gray-900 m-0">
+          <h3 className="text-xl sm:text-2xl font-black text-gray-900 m-0 pr-8">
             {isEditing ? 'Editar Pedido en Borrador' : 'Crear Pedido en Borrador'}
           </h3>
+          {isEditing && <p className="text-xs text-gray-700 break-all">{orderToEdit?.id}</p>}
 
           {/* Aviso Criterio 4 HU12 */}
           <div className="mt-2 p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center gap-2">
             <span className="text-base">ℹ️</span>
             <span>
-              <strong>Estado Borrador:</strong> Guardar este pedido en borrador{' '}
-              <strong>no reserva ni descuenta stock físico</strong> en almacén y no promete confirmación al cliente (la
-              reserva se implementa en Sprint 2 según HU05).
+              <strong>La reserva de stock se realiza al confirmar el pedido.</strong>
             </span>
           </div>
         </div>
@@ -217,8 +208,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
           </div>
         )}
 
-        {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-y-auto pr-1">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           {/* Sección 1: Datos del Cliente */}
           <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-4 flex-shrink-0">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -297,13 +287,14 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
           {/* Sección 2: Selección y Adición de Productos */}
           <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-4 flex-shrink-0">
             <h4 className="text-xs font-black uppercase text-gray-700 tracking-wider m-0 mb-3">
-              2. Seleccionar Productos y Cantidad
+              2. Agregar productos
             </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
               <div className="sm:col-span-7">
-                <label className="block text-xs font-bold text-gray-700 mb-1">Producto del Catálogo</label>
+                <label htmlFor="draft-product" className="block text-xs font-bold text-gray-700 mb-1">Producto del catálogo</label>
                 <select
+                  id="draft-product"
                   value={selectedProductCode}
                   onChange={(e) => setSelectedProductCode(e.target.value)}
                   className="w-full text-xs sm:text-sm p-2 bg-white border border-gray-300 rounded-lg outline-none focus:border-amber-500"
@@ -317,8 +308,10 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-gray-700 mb-1">Cantidad</label>
+                <label htmlFor="draft-add-quantity" className="block text-xs font-bold text-gray-700 mb-1">Unidades a agregar</label>
                 <input
+                  id="draft-add-quantity"
+                  aria-describedby="draft-selected-quantity"
                   type="number"
                   min="1"
                   step="1"
@@ -338,6 +331,9 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
                 </button>
               </div>
             </div>
+            <p id="draft-selected-quantity" className="text-xs text-gray-600" role="status">
+              {selectedProduct && <>Ya en el pedido: <strong>{selectedQuantity}</strong> {selectedQuantity === 1 ? 'unidad' : 'unidades'}</>}
+            </p>
 
             {selectedProduct && (
               <div className="flex items-center gap-3 mt-3 pt-3 border-t border-gray-200 text-xs text-gray-600">
@@ -376,13 +372,13 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
                 Aún no has agregado ningún producto al borrador. Selecciona uno arriba y haz clic en "+ Agregar al Pedido".
               </div>
             ) : (
-              <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm flex-1 overflow-y-auto">
+              <div className="tca-table border border-gray-200 rounded-2xl shadow-sm" tabIndex={0} role="region" aria-label="Ítems del pedido">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead className="bg-gray-100 text-gray-600 font-bold sticky top-0">
                     <tr>
                       <th className="p-2.5 pl-3">Producto</th>
                       <th className="p-2.5 text-center">Precio Unit.</th>
-                      <th className="p-2.5 text-center">Cantidad</th>
+                      <th className="p-2.5 text-center">Cantidad en el pedido</th>
                       <th className="p-2.5 text-right">Subtotal</th>
                       <th className="p-2.5 pr-3 text-center">Quitar</th>
                     </tr>
@@ -399,6 +395,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
                         </td>
                         <td className="p-2.5 text-center">
                           <input
+                            aria-label={`Cantidad en el pedido de ${line.producto_nombre}`}
                             type="number"
                             min="1"
                             step="1"
@@ -451,7 +448,7 @@ export const OrderDraftFormModal: React.FC<OrderDraftFormModalProps> = ({
               </span>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={onClose}

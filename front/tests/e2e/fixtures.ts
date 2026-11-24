@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { createDatabase, asUser, call, users } from '../helpers/database.mjs';
+import { createDatabase, asUser, call, users } from '../../../bd/tests/helpers/database.mjs';
 import type { PGlite } from '@electric-sql/pglite';
 import { randomUUID } from 'node:crypto';
 
@@ -48,5 +48,8 @@ export async function login(page: import('@playwright/test').Page, role: string)
   await page.locator('main').getByLabel('Correo', { exact: true }).fill(`${role}@demo.test`);
   await page.getByLabel('Contraseña', { exact: true }).fill('Test-password-123');
   await page.getByRole('button',{name:'Iniciar sesión',exact:true}).click();
-  await expect(page.getByRole('heading',{name:/Bienvenido/})).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Panel de operaciones' })).toBeVisible();
+  await expect(page.getByRole('region', { name: role === 'warehouse' ? 'Despacho' : 'Pedidos', exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Inventario', exact: true })).toHaveCount(role === 'sales' ? 0 : 1);
+  await expect(page.getByRole('region', { name: 'Administración', exact: true })).toHaveCount(role === 'manager' ? 1 : 0);
 }

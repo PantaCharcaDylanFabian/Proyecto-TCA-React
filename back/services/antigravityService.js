@@ -8,17 +8,17 @@ import path from 'node:path';
 
 // Coordenadas cartesianas y red vial de Piura (modelado formal para A*)
 export const PIURA_NODES = {
-  ALMACEN_CENTRAL_CASTILLA: { x: 0.0, y: 0.0, name: 'Almacén Central (Castilla)' },
-  PIURA_CENTRO: { x: 2.1, y: 1.2, name: 'Piura Centro' },
-  URB_SANTA_ISABEL: { x: 3.5, y: 3.0, name: 'Urb. Santa Isabel' },
-  VEINTISEIS_DE_OCTUBRE: { x: 4.8, y: 0.5, name: 'Veintiséis de Octubre' },
-  CATACAOS: { x: 1.0, y: -11.5, name: 'Catacaos' },
-  LA_UNION: { x: 3.2, y: -24.0, name: 'La Unión' },
-  SECHURA: { x: 8.5, y: -45.0, name: 'Sechura' },
-  SULLANA_CENTRO: { x: -15.0, y: 32.0, name: 'Sullana Centro' },
-  BELLAVISTA_SULLANA: { x: -14.0, y: 34.5, name: 'Bellavista (Sullana)' },
-  TAMBOGRANDE: { x: 18.0, y: 35.0, name: 'Tambogrande' },
-  PAITA_PUERTO: { x: -42.0, y: 18.0, name: 'Paita Puerto' }
+  ALMACEN_CENTRAL_CASTILLA: { x: 0.0, y: 0.0, lat: -5.20078, lng: -80.62112, name: 'Almacén Central (Castilla)' },
+  PIURA_CENTRO: { x: 2.1, y: 1.2, lat: -5.1972, lng: -80.6269, name: 'Piura Centro' },
+  URB_SANTA_ISABEL: { x: 3.5, y: 3.0, lat: -5.1817, lng: -80.636, name: 'Urb. Santa Isabel' },
+  VEINTISEIS_DE_OCTUBRE: { x: 4.8, y: 0.5, lat: -5.1775, lng: -80.67432, name: 'Veintiséis de Octubre' },
+  CATACAOS: { x: 1.0, y: -11.5, lat: -5.2667, lng: -80.6833, name: 'Catacaos' },
+  LA_UNION: { x: 3.2, y: -24.0, lat: -5.4022, lng: -80.7414, name: 'La Unión' },
+  SECHURA: { x: 8.5, y: -45.0, lat: -5.5569, lng: -80.8222, name: 'Sechura' },
+  SULLANA_CENTRO: { x: -15.0, y: 32.0, lat: -4.9036, lng: -80.6853, name: 'Sullana Centro' },
+  BELLAVISTA_SULLANA: { x: -14.0, y: 34.5, lat: -4.89, lng: -80.6803, name: 'Bellavista (Sullana)' },
+  TAMBOGRANDE: { x: 18.0, y: 35.0, lat: -4.9267, lng: -80.3447, name: 'Tambogrande' },
+  PAITA_PUERTO: { x: -42.0, y: 18.0, lat: -5.0842, lng: -81.1119, name: 'Paita Puerto' }
 };
 
 export const PIURA_EDGES = {

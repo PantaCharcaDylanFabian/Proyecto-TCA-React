@@ -4,8 +4,9 @@
  */
 
 import http from 'node:http';
-import { antigravityService, PIURA_NODES } from '../services/antigravityService.js';
+import { antigravityService, PIURA_EDGES, PIURA_NODES } from '../services/antigravityService.js';
 import { supabaseService } from '../services/supabaseService.js';
+import { inventoryInputs, forecastDemand, assessSupply, forecastEvaluation } from '../services/inventoryForecast.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -360,16 +361,15 @@ const server = http.createServer(async (req, res) => {
     // =========================================================================
     // 3. MODELOS DE INTELIGENCIA ARTIFICIAL (APF 3 DIRECT ENDPOINTS)
     // =========================================================================
-    if (pathname === '/api/ai/predict-demand' && method === 'POST') {
+    if (method === 'POST' && ['/api/ai/predict-demand', '/api/ai/stockout-risk'].includes(pathname)) {
       const body = await parseBody(req);
-      const result = antigravityService.toolPredecirDemanda(body);
-      return json(res, 200, result);
-    }
-
-    if (pathname === '/api/ai/stockout-risk' && method === 'POST') {
-      const body = await parseBody(req);
-      const result = antigravityService.toolEvaluarRiesgo(body);
-      return json(res, 200, result);
+      const demand = pathname === '/api/ai/predict-demand';
+      if (body && Object.hasOwn(body, 'escenario')) {
+        const inputs = inventoryInputs(body.escenario);
+        if (!inputs) return json(res, 400, { error: 'Revisa las existencias, las ventas semanales y el plazo del proveedor.' });
+        return json(res, 200, demand ? { demandaQuincenal: Math.max(0, forecastDemand(inputs)) } : assessSupply(inputs));
+      }
+      return json(res, 200, demand ? antigravityService.toolPredecirDemanda(body) : antigravityService.toolEvaluarRiesgo(body));
     }
 
     if (pathname === '/api/ai/optimal-route' && method === 'POST') {
@@ -379,10 +379,11 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname === '/api/ai/routes' && method === 'GET') {
-      return json(res, 200, { nodos: PIURA_NODES });
+      return json(res, 200, { nodos: PIURA_NODES, conexiones: PIURA_EDGES });
     }
 
     if (pathname === '/api/ai/ml-benchmark' && method === 'GET') {
+      if (url.searchParams.get('uso') === 'reposicion') return json(res, 200, forecastEvaluation);
       return json(res, 200, antigravityService.getMlBenchmark());
     }
 
@@ -476,7 +477,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen({ port: PORT, host: process.env.TCA_API_HOST }, () => {
   console.log(`===========================================================================`);
   console.log(`  🚀 TCA BACKEND API — POWERED BY GOOGLE ANTIGRAVITY SDK`);
   console.log(`  📡 Escuchando en:         http://localhost:${PORT}`);

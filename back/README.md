@@ -125,3 +125,9 @@ npm run ai:all
 # 6. Ejecutar el Agente Inteligente Antigravity (Python)
 npm run ai:agent
 ```
+
+### Previsión de abastecimiento
+
+El panel de Reposición envía el mismo objeto `escenario` a `POST /api/ai/predict-demand` y `POST /api/ai/stockout-risk`. Incluye `precio`, `stockDisponible`, `stockMinimo`, `unidadesSemana`, `pedidosSemana` y `plazoDias`. La consulta `GET /api/ai/ml-benchmark?uso=reposicion` devuelve la evaluación correspondiente a los modelos desplegados.
+
+Node carga los parámetros entrenados desde `services/inventory-models.json`. Para regenerarlos desde este directorio con las dependencias de análisis instaladas, ejecuta `python ai_analytics/export_forecast.py`, corre `npm test` y reinicia la API. Las variables de ventas y plazos del conjunto de entrenamiento son simuladas.

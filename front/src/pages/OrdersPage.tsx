@@ -1,5 +1,5 @@
 import { money, dateTime } from '../utils/format';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getDraftOrders, saveDraftOrder, confirmOrder, cancelOrder, dispatchOrder, prepareOrder } from '../services/orderService';
 import { getManagedProducts } from '../services/productService';
 import { useResource, useAction } from '../hooks/useResource';
@@ -19,8 +19,20 @@ export function OrdersPage() {
   const [formOpen,setFormOpen] = useState(false); const [partial,setPartial] = useState(false);
   const [scan,setScan] = useState(''); const [preparedQty,setPreparedQty] = useState('1');
   const [whatsapp,setWhatsapp] = useState('');
+  const [detailOpen, setDetailOpen] = useState(false);
+  const detailHeading = useRef<HTMLHeadingElement>(null);
+  const listHeading = useRef<HTMLHeadingElement>(null);
+  const selectedButton = useRef<HTMLButtonElement>(null);
   const orders=resource.data?.orders || []; const products=resource.data?.products || [];
+  const visibleOrders = orders.filter(order =>
+    (status === 'TODOS' || order.estado === status) &&
+    `${order.id} ${order.cliente_nombre} ${order.cliente_documento}`.toLowerCase().includes(filter.trim().toLowerCase())
+  );
   const order=orders.find(o => o.id===selected);
+  const detailId = detailOpen ? order?.id : undefined;
+  useEffect(() => {
+    if (detailId && !formOpen) detailHeading.current?.focus();
+  }, [detailId, formOpen]);
   const sales=auth.can('GERENCIA','VENTAS'); const warehouse=auth.can('GERENCIA','ALMACEN');
   const shortage=order?.lineas.some(l => l.cantidad > ((products.find(p => p.codigo===l.producto_id)?.stock_actual || 0)-(products.find(p => p.codigo===l.producto_id)?.stock_reservado || 0)));
   const save = async (o: OrderDraft) => {
@@ -28,23 +40,33 @@ export function OrdersPage() {
     await action.run(JSON.stringify(o),async key => {
       const result=await saveDraftOrder(o,orders,key);
       if (!result.success) { failure=result.error || 'No se guardó el borrador.'; throw new Error(failure); }
-      saved=true; if(result.data) setSelected(result.data.id);
+      saved=true; if(result.data) { setSelected(result.data.id); setDetailOpen(true); }
     },'Borrador guardado. No se reservó ni descontó stock.');
     return { success:saved, error: saved ? undefined : failure || 'No se guardó el borrador. Comprueba tu conexión.' };
   };
   return <Page title="Pedidos y despacho" description="Atiende solicitudes web o internas, confirma lo disponible y prepara cada producto antes de despachar.">
     <ResourceStatus {...resource} retry={resource.refresh} /><Notice error={action.error} message={action.message} />
-    <div className="tca-row no-print"><label className="grow">Buscar pedido o cliente<input type="search" value={filter} onChange={e => setFilter(e.target.value)} /></label>
+    <section className="tca-card tca-operation-panel no-print" aria-labelledby="order-list-heading">
+    <h2 id="order-list-heading" ref={listHeading} tabIndex={-1}>Listado de pedidos</h2>
+    <div className="tca-row tca-operation-toolbar"><label className="grow">Buscar pedido o cliente<input type="search" value={filter} onChange={e => setFilter(e.target.value)} /></label>
       <label>Estado<select value={status} onChange={e => setStatus(e.target.value)}>{['TODOS','BORRADOR','CONFIRMADO','DESPACHADO','CANCELADO'].map(s => <option key={s}>{s}</option>)}</select></label>
       {sales && <button className="tca-button" onClick={() => { setEditing(null); setFormOpen(true); }}>Nuevo borrador</button>}
     </div>
-    <div className="tca-table tca-card no-print"><table><thead><tr><th>Pedido / fecha</th><th>Cliente / canal</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead><tbody>
-      {orders.filter(o => (status==='TODOS'||o.estado===status) && `${o.id} ${o.cliente_nombre} ${o.cliente_documento}`.toLowerCase().includes(filter.toLowerCase())).map(o => <tr key={o.id}><td><small>{o.id}</small><br/>{dateTime(o.created_at)}</td><td>{o.cliente_nombre}<small className="block">{o.canal || 'INTERNO'}</small></td><td><span className={`tca-badge ${o.estado.toLowerCase()}`}>{o.estado}</span></td><td>{money(o.total)}</td><td><button className="tca-button secondary" onClick={() => { setSelected(o.id); setPartial(false); setWhatsapp(''); }}>Ver detalle</button></td></tr>)}
-    </tbody></table>{!orders.length && !resource.loading && <p>No hay pedidos registrados.</p>}</div>
-    {order && <section className="tca-card tca-stack print-document" aria-label="Detalle del pedido"><h2>{order.constancia || 'Detalle de pedido'}</h2>
+    {visibleOrders.length > 0 ? <div className="tca-table" tabIndex={0} role="region" aria-label="Resultados de pedidos"><table><thead><tr><th>Pedido / fecha</th><th>Cliente / canal</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead><tbody>
+      {visibleOrders.map(o => <tr key={o.id} className={order?.id === o.id ? 'tca-selected-row' : undefined}><td><small>{o.id}</small><br/>{dateTime(o.created_at)}</td><td>{o.cliente_nombre}<small className="block">{o.canal || 'INTERNO'}</small></td><td><span className={`tca-badge ${o.estado.toLowerCase()}`}>{o.estado}</span></td><td>{money(o.total)}</td><td><button className="tca-button secondary" ref={selected === o.id ? selectedButton : undefined} aria-expanded={detailId === o.id} onClick={() => { setSelected(o.id); setDetailOpen(true); if (detailId === o.id) detailHeading.current?.focus(); setPartial(false); setWhatsapp(''); }}>Ver detalle</button></td></tr>)}
+    </tbody></table></div> : !resource.loading && !resource.error &&
+      <p className="tca-empty">{orders.length ? 'Ningún pedido coincide con los filtros.' : 'No hay pedidos registrados.'}</p>}
+    </section>
+    {detailOpen && order && <section className="tca-card tca-stack print-document" aria-label="Detalle del pedido">
+      <div className="tca-order-detail-header"><h2 ref={detailHeading} tabIndex={-1}>{order.constancia || 'Detalle de pedido'}</h2>
+        <button className="tca-button secondary no-print" onClick={() => {
+          setDetailOpen(false);
+          (selectedButton.current ?? listHeading.current)?.focus();
+        }}>Volver al listado</button>
+      </div>
       <p><strong>{order.cliente_nombre}</strong> · {order.cliente_documento}<br/>{order.cliente_telefono} · {order.cliente_direccion}</p>
       <p><small>{order.id}</small> · <strong>{order.estado}</strong> · {order.entrega || 'RECOJO'} · {dateTime(order.created_at)}</p>
-      <div className="tca-table"><table><thead><tr><th>Producto</th><th>Solicitado</th><th>{order.estado==='BORRADOR'?'Disponible ahora':'Confirmado'}</th><th>Pendiente</th><th>Preparado</th><th>Precio</th></tr></thead><tbody>
+      <div className="tca-table" tabIndex={0} role="region" aria-label="Productos del pedido"><table><thead><tr><th>Producto</th><th>Solicitado</th><th>{order.estado==='BORRADOR'?'Disponible ahora':'Confirmado'}</th><th>Pendiente</th><th>Preparado</th><th>Precio</th></tr></thead><tbody>
         {order.lineas.map(l => { const p=products.find(p => p.codigo===l.producto_id); const available=p && p.activo ? p.stock_actual-(p.stock_reservado||0) : 0; const confirmed=order.estado==='BORRADOR'?Math.min(available,l.cantidad):(l.cantidad_confirmada||0);
           return <tr key={l.producto_id}><td>{l.producto_nombre}<small className="block">{l.producto_id}</small></td><td>{l.cantidad}</td><td>{order.estado==='BORRADOR'?available:confirmed}</td><td>{Math.max(0,l.cantidad-confirmed)>0?<strong className="text-red-700">{l.cantidad-confirmed} pendientes</strong>:'Completo'}</td><td>{l.cantidad_preparada||0}</td><td>{money(l.precio_unitario)}</td></tr>;
         })}</tbody></table></div>

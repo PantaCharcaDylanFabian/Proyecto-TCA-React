@@ -34,7 +34,7 @@ Proyecto-TCA-React/
 
 ### 💻 Módulo Frontend (`/front`)
 - **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS v4.
-- **Módulo Visual APF 3:** Dashboard interactivo accesible en `/apf3` con simulador de rutas $A^*$, visualizador de modelos de regresión/clasificación, benchmark de ensambles y chat interactivo con el Agente Antigravity.
+- Gerencia y Almacén pueden planificar rutas en `/rutas-de-reparto` y evaluar productos en `/reposicion?vista=prevision`. La previsión consulta la API para estimar demanda quincenal, riesgo de agotamiento y prioridad de reposición.
 - **Módulos Operativos:** Catálogo comercial, control de inventario, gestión de pedidos y borradores atómicos, escáner de códigos de barra y reposición inteligente.
 - **Pruebas:** Validaciones puras de dominio (`hu11`, `hu12`) y pruebas E2E con Playwright.
 - 👉 Más detalles en [front/README.md](front/README.md).

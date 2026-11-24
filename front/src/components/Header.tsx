@@ -1,22 +1,46 @@
 import { useState } from 'react';
 import { useUI } from '../context/UIContext';
 import { useCommerce } from '../context/CommerceContext';
+import { useAuth } from '../context/AuthContext';
 import { getImageUrl } from '../utils/image';
-export function Header(){
-  const {toggleSidebar,navigate}=useUI();const commerce=useCommerce();const [query,setQuery]=useState('');
-  return <header className="tca-header no-print"><a href="/" aria-label="TCA Inicio"><img src={getImageUrl('imagenes/TCALOGOINICIO.png')} alt="Distribuidora TCA"/></a>
-    <button className="tca-menu" onClick={toggleSidebar} aria-label="Abrir menú de categorías">☰</button>
-    <nav aria-label="Sitio">
-      <a href="/">Inicio</a>
-      <a href="/marcas">Marcas</a>
-      <a href="/nosotros">Nosotros</a>
-      <a href="/apf3" className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md shadow-amber-400/30 whitespace-nowrap transition-all hover:scale-105">
-        <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-        ✨ APF 3 · IA & DevOps
-        <span className="bg-slate-950 text-amber-300 px-1.5 py-0.2 rounded-md text-[10px] font-extrabold">20 Pts</span>
-      </a>
-    </nav>
-    <form className="tca-search" onSubmit={e=>{e.preventDefault();navigate(`/catalogo?q=${encodeURIComponent(query)}`);}}><input type="search" aria-label="Buscar productos" placeholder="Nombre o código de barras" value={query} onChange={e=>setQuery(e.target.value)}/><button aria-label="Buscar">Buscar</button></form>
-    <a href="/carrito" className="tca-cart-link">Carrito ({commerce.cart.reduce((n,l)=>n+l.cantidad,0)})</a>
-  </header>;
+
+export function Header({ path }: { path: string }) {
+  const { toggleSidebar, isSidebarOpen, navigate } = useUI();
+  const { cart } = useCommerce();
+  const { profile } = useAuth();
+  const [query, setQuery] = useState('');
+  const quantity = cart.reduce((sum, item) => sum + item.cantidad, 0);
+
+  return (
+    <header className="tca-header no-print">
+      <div className="store-container store-header-main">
+        <a href="/" aria-label="TCA Inicio"><img className="store-logo" src={getImageUrl('TCALOGOINICIO.png')} alt="Distribuidora TCA" /></a>
+        <form className="store-search" role="search" onSubmit={event => {
+          event.preventDefault();
+          const term = query.trim();
+          navigate(term ? `/catalogo?q=${encodeURIComponent(term)}` : '/catalogo');
+        }}>
+          <input type="search" aria-label="Buscar productos" placeholder="Nombre o código" value={query} onChange={event => setQuery(event.target.value)} />
+          <button type="submit">Buscar</button>
+        </form>
+        <a className="store-cart" href="/carrito" aria-current={path === 'carrito' ? 'page' : undefined}>
+          <svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 3h3l2.5 12h11L21 7H6"/><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/>
+          </svg>
+          Carrito <span>{quantity}</span>
+        </a>
+        <a className="store-account" href={profile ? '/panel' : '/login'}>{profile ? 'Panel interno' : 'Acceso interno'}</a>
+      </div>
+      <div className="store-nav-band">
+        <nav className="store-container store-nav" aria-label="Sitio">
+          <button type="button" onClick={toggleSidebar} aria-label="Abrir menú de categorías" aria-haspopup="dialog" aria-expanded={isSidebarOpen}>
+            <span className="store-menu-icon" aria-hidden="true">☰</span> Categorías
+          </button>
+          <a href="/catalogo" aria-current={path === 'catalogo' ? 'page' : undefined}>Catálogo</a>
+          <a href="/marcas" aria-current={path === 'marcas' ? 'page' : undefined}>Marcas</a>
+          <a href="/nosotros" aria-current={path === 'nosotros' ? 'page' : undefined}>Nosotros</a>
+        </nav>
+      </div>
+    </header>
+  );
 }

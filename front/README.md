@@ -24,13 +24,13 @@ front/
 │   ├── hooks/              # Custom Hooks de React
 │   ├── lib/                # Clientes Supabase y API
 │   ├── pages/              # Páginas del sistema
-│   │   ├── APF3AnalyticsPage.tsx  # ✨ Dashboard Interactivo APF 3 (DevOps, IA, A*, Agente)
+│   │   ├── DeliveryRoutesPage.tsx # Planificación de recorridos de reparto
 │   │   ├── HomePage.tsx           # Vista principal con Hero Banner
 │   │   ├── CatalogPage.tsx        # Catálogo comercial público
 │   │   ├── DashboardPage.tsx      # Métricas de ventas e inventario
 │   │   ├── InventoryPage.tsx      # Gestión de stock físico y mínimo
 │   │   ├── OrdersPage.tsx         # Gestión de pedidos y despacho
-│   │   └── ReplenishmentPage.tsx  # Reposición inteligente sugerida
+│   │   └── ReplenishmentPage.tsx  # Alertas, compras y previsión de abastecimiento
 │   ├── services/           # Servicios de integración (Calidad Antigravity, Supabase)
 │   ├── types/              # Definiciones de tipos TypeScript
 │   ├── utils/              # Funciones auxiliares de formato y descarga

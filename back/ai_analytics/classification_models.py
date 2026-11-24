@@ -29,7 +29,7 @@ from sklearn.metrics import (
 
 from data_loader import load_tca_dataset
 
-def train_and_evaluate_logistic():
+def train_and_evaluate_logistic(reports_dir=None):
     df = load_tca_dataset()
     
     # Variables predictoras: precio, stock_actual, stock_minimo, lead_time_days, dias_inventario, demanda_semanal
@@ -75,7 +75,7 @@ def train_and_evaluate_logistic():
     roc_auc = auc(fpr, tpr)
     
     # Generar gráficos
-    reports_dir = os.path.join(os.path.dirname(__file__), 'reports')
+    reports_dir = reports_dir or os.path.join(os.path.dirname(__file__), 'reports')
     os.makedirs(reports_dir, exist_ok=True)
     
     # 1. Matriz de Confusión

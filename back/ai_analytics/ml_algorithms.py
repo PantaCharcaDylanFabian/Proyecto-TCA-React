@@ -36,7 +36,7 @@ from sklearn.metrics import classification_report, accuracy_score, f1_score, pre
 
 from data_loader import load_tca_dataset
 
-def train_and_evaluate_ml_suite():
+def train_and_evaluate_ml_suite(reports_dir=None):
     df = load_tca_dataset()
     
     # Features y Target Multiclase (prioridad_reposicion: 0=Baja, 1=Media, 2=Critica)
@@ -118,7 +118,7 @@ def train_and_evaluate_ml_suite():
     df_results = pd.DataFrame(results)
     
     # 2. Generación de Gráficos y Reportes
-    reports_dir = os.path.join(os.path.dirname(__file__), 'reports')
+    reports_dir = reports_dir or os.path.join(os.path.dirname(__file__), 'reports')
     os.makedirs(reports_dir, exist_ok=True)
     
     # Gráfico 1: Comparación de F1-Score (Ensambles vs Modelos Individuales)

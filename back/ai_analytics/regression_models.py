@@ -26,7 +26,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 from data_loader import load_tca_dataset
 
-def train_and_evaluate_regression():
+def train_and_evaluate_regression(reports_dir=None):
     df = load_tca_dataset()
     
     # Variables predictoras (X) y objetivo (y)
@@ -93,7 +93,7 @@ def train_and_evaluate_regression():
     }
     
     # Generar gráfico de comparación de predicción
-    reports_dir = os.path.join(os.path.dirname(__file__), 'reports')
+    reports_dir = reports_dir or os.path.join(os.path.dirname(__file__), 'reports')
     os.makedirs(reports_dir, exist_ok=True)
     
     plt.figure(figsize=(10, 6))

@@ -102,12 +102,15 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/65 z-[9999] flex justify-center items-center p-4 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+      className="tca-form-overlay fixed inset-0 bg-black/65 z-[9999] grid place-items-center p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-9 relative shadow-2xl border-t-[6px] border-[#C32228] my-6 max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-200"
+        className="tca-form-dialog bg-white w-full max-w-[850px] rounded-3xl p-6 sm:p-9 relative shadow-2xl border-t-[6px] border-[#C32228]"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="catalog-import-title"
       >
         <button
           onClick={onClose}
@@ -119,15 +122,11 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
 
         {/* Header */}
         <div className="mb-6 flex-shrink-0">
-          <span className="text-[11px] font-black tracking-widest text-[#C32228] bg-red-50 px-3 py-1 rounded-full uppercase">
-            HU11 · Validación de Catálogo Existente
-          </span>
-          <h3 className="text-xl sm:text-2xl font-black text-gray-900 m-0 mt-2">
-            Importador y Validador de Catálogo JSON
+          <h3 id="catalog-import-title" className="text-xl sm:text-2xl font-black text-gray-900 m-0 pr-8">
+            Importar catálogo JSON
           </h3>
           <p className="text-xs sm:text-sm text-gray-600 m-0 mt-1 leading-relaxed">
-            Audita el archivo de catálogo contra las reglas de integridad (código único, nombre, precio &gt; 0, stock).
-            <strong> No utiliza archivos mal formados como fuente productiva;</strong> solo incorpora las filas aceptadas.
+            Revisa los productos y corrige las filas con errores antes de importarlos.
           </p>
         </div>
 
@@ -138,12 +137,11 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
               type="button"
               onClick={handleValidateCleanSeed}
               className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs sm:text-sm rounded-xl cursor-pointer border-none shadow-sm hover:shadow transition-all flex items-center gap-1.5"
-              title="Cargar catálogo depurado de TK11 con 160 productos limpios y deduplicados"
             >
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              <span>Semilla Depurada (TK11)</span>
+              <span>Cargar catálogo de ejemplo</span>
             </button>
 
             <button
@@ -226,7 +224,7 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
             </div>
 
             {/* Lista con scroll de filas */}
-            <div className="flex-1 overflow-y-auto border border-gray-200 rounded-xl bg-gray-50/50 p-3 text-left">
+            <div className="border border-gray-200 rounded-xl bg-gray-50/50 p-3 text-left">
               {activeTab === 'rejected' ? (
                 validationResult.rejectedRows.length === 0 ? (
                   <p className="text-center text-xs text-gray-500 py-6 m-0">
@@ -293,11 +291,11 @@ export const CatalogImportModal: React.FC<CatalogImportModalProps> = ({
             </div>
 
             {/* Botón de importación segura */}
-            <div className="flex justify-between items-center gap-3 pt-4 mt-2 flex-shrink-0 border-t border-gray-100">
+            <div className="flex flex-wrap justify-between items-center gap-3 pt-4 mt-2 border-t border-gray-100">
               <span className="text-xs text-gray-500 font-medium">
-                Regla HU11: Solo se procesan las filas válidas en Supabase / BD.
+                Se importarán las filas que pasaron la validación.
               </span>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={onClose}

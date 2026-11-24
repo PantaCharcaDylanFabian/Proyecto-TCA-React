@@ -7,6 +7,7 @@ import { Sidebar } from './components/Sidebar';
 import { Footer } from './components/Footer';
 import { WhatsAppFloat } from './components/WhatsAppFloat';
 import { TeamNavigation } from './components/TeamNavigation';
+import type { TeamPageLink } from './components/TeamNavigation';
 import { InternalAccess } from './components/InternalAccess';
 import { StickyModal } from './components/modals/StickyModal';
 import { ProductZoomModal } from './components/modals/ProductZoomModal';
@@ -27,7 +28,18 @@ const TeamPage=lazy(()=>import('./pages/TeamPage').then(m=>({default:m.TeamPage}
 const ContactsPage=lazy(()=>import('./pages/ContactsPage').then(m=>({default:m.ContactsPage})));
 const MarcasPage=lazy(()=>import('./pages/MarcasPage').then(m=>({default:m.MarcasPage})));
 const NosotrosPage=lazy(()=>import('./pages/NosotrosPage').then(m=>({default:m.NosotrosPage})));
-const APF3AnalyticsPage=lazy(()=>import('./pages/APF3AnalyticsPage').then(m=>({default:m.APF3AnalyticsPage})));
+const DeliveryRoutesPage=lazy(()=>import('./pages/DeliveryRoutesPage').then(m=>({default:m.DeliveryRoutesPage})));
+
+const internalPages = [
+  { paths: ['panel', 'dashboard'], label: 'Panel', roles: ['GERENCIA', 'VENTAS', 'ALMACEN'], Screen: DashboardPage },
+  { paths: ['gestion-productos', 'admin-productos', 'admin'], label: 'Productos', roles: ['GERENCIA'], Screen: ProductManagementPage },
+  { paths: ['inventario'], label: 'Inventario', roles: ['GERENCIA', 'ALMACEN'], Screen: InventoryPage },
+  { paths: ['pedidos', 'pedidos-borrador', 'ventas'], label: 'Pedidos', roles: ['GERENCIA', 'VENTAS', 'ALMACEN'], Screen: OrdersPage },
+  { paths: ['rutas-de-reparto', 'apf3', 'apf-03', 'ia', 'ia-analytics', 'analytics', 'ia-devops'], label: 'Rutas de reparto', roles: ['GERENCIA', 'ALMACEN'], Screen: DeliveryRoutesPage },
+  { paths: ['reposicion'], label: 'Reposición', roles: ['GERENCIA', 'ALMACEN'], Screen: ReplenishmentPage },
+  { paths: ['equipo'], label: 'Equipo', roles: ['GERENCIA'], Screen: TeamPage },
+  { paths: ['contactos'], label: 'Contactos', roles: ['GERENCIA', 'VENTAS'], Screen: ContactsPage },
+] satisfies (TeamPageLink & { Screen: typeof DashboardPage })[];
 
 function AppContent(){
   const {currentPath,navigate}=useUI();
@@ -40,34 +52,35 @@ function AppContent(){
     };
     document.addEventListener('click',click);return()=>document.removeEventListener('click',click);
   },[navigate]);
-  const path=currentPath.split('?')[0].replace(/^\//,'').replace(/\.html$/,'').toLowerCase();
+  const path=currentPath.split('?')[0].replace(/^\/|\/$/g,'').replace(/\.html$/,'').toLowerCase();
+  const internalPage = internalPages.find(({ paths }) => paths.includes(path));
+  const isInternal = Boolean(internalPage) || path === 'login';
   const page=()=>{
+    if (internalPage) {
+      const { roles, Screen } = internalPage;
+      return <InternalAccess roles={roles}><Screen /></InternalAccess>;
+    }
     if(!path||['index','inicio'].includes(path))return <HomePage/>;
     if(path==='marcas')return <MarcasPage/>;
     if(path==='nosotros')return <NosotrosPage/>;
     if(path==='login')return <LoginPage/>;
-    if(['apf3','apf-03','ia','ia-analytics','analytics','ia-devops'].includes(path))return <APF3AnalyticsPage/>;
     if(path==='carrito')return <CartPage/>;
     if(path==='seguimiento')return <TrackingPage/>;
-    if(['panel','dashboard'].includes(path))return <InternalAccess roles={['GERENCIA','VENTAS','ALMACEN']}><DashboardPage/></InternalAccess>;
-    if(['gestion-productos','admin-productos','admin'].includes(path))return <InternalAccess roles={['GERENCIA']}><ProductManagementPage/></InternalAccess>;
-    if(path==='inventario')return <InternalAccess roles={['GERENCIA','ALMACEN']}><InventoryPage/></InternalAccess>;
-    if(['pedidos','pedidos-borrador','ventas'].includes(path))return <InternalAccess roles={['GERENCIA','VENTAS','ALMACEN']}><OrdersPage/></InternalAccess>;
-    if(path==='reposicion')return <InternalAccess roles={['GERENCIA','ALMACEN']}><ReplenishmentPage/></InternalAccess>;
-    if(path==='equipo')return <InternalAccess roles={['GERENCIA']}><TeamPage/></InternalAccess>;
-    if(path==='contactos')return <InternalAccess roles={['GERENCIA','VENTAS']}><ContactsPage/></InternalAccess>;
+    if(path==='confirmacion')return <TrackingPage confirmation/>;
     if(['catalogo','productos-visor'].includes(path))return <CatalogPage key={currentPath}/>;
     const matched=getSubcategoryData(path);
     if(matched)return <CatalogPage key={currentPath} initialSlug={matched.key}/>;
     if(/^(categoria-|subcategoria-)/.test(path)||['bebidas','alcoholicas'].includes(path)){
-      const macros:Record<string,string>={'categoria-bebidas':'Bebidas','bebidas':'Bebidas','categoria-alcoholicas':'Bebidas','alcoholicas':'Bebidas','categoria-limpieza':'Limpieza','categoria-papeleria':'Útiles','categoria-hogar':'Otros','categoria-cuidado-personal':'Cuidado Personal'};
+      const macros:Record<string,string>={'categoria-alimentos':'Alimentos','categoria-bebidas':'Bebidas','bebidas':'Bebidas','categoria-alcoholicas':'Bebidas','alcoholicas':'Bebidas','categoria-limpieza':'Limpieza','categoria-papeleria':'Útiles','categoria-hogar':'Otros','categoria-cuidado-personal':'Cuidado Personal'};
       return <CatalogPage key={currentPath} initialCategory={macros[path]||path.replace(/^(subcategoria-|categoria-)/,'').replace(/-/g,' ')}/>;
     }
     return <section className="tca-page"><h1>Página no encontrada</h1><a href="/catalogo">Volver al catálogo</a></section>;
   };
-  return <div className="min-h-screen flex flex-col bg-white"><Header/><TeamNavigation/><Sidebar/>
-    <main className="flex-1 w-full pb-20 overflow-x-hidden"><Suspense fallback={<p className="tca-page" role="status">Cargando pantalla…</p>}>{page()}</Suspense></main>
-    <Footer/><WhatsAppFloat/><StickyModal/><ProductZoomModal/><CatalogSecretModal/>
+  return <div className="min-h-screen flex flex-col bg-white">
+    {isInternal ? <TeamNavigation pages={internalPages} activePath={path} /> :
+      <><Header path={path} /><Sidebar /></>}
+    <main className={`flex-1 w-full overflow-x-hidden ${isInternal ? 'tca-workspace' : ''}`}><Suspense fallback={<p className="tca-page" role="status">Cargando pantalla…</p>}>{page()}</Suspense></main>
+    {!isInternal && <><Footer/><WhatsAppFloat/><StickyModal/><ProductZoomModal/><CatalogSecretModal/></>}
   </div>;
 }
 export function App(){return <UIProvider><AuthProvider><CommerceProvider><AppContent/></CommerceProvider></AuthProvider></UIProvider>;}
